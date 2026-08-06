@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dermatologista em Florianópolis | Dra. Vanessa Viríssimo Maciel</title>
+  <meta name="description" content="Dermatologista em Florianópolis. Dra. Vanessa Viríssimo Maciel — rejuvenescimento facial, tratamento de flacidez, manchas e pele com tecnologias avançadas e atendimento humanizado." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="fotos/hero.jpeg" fetchpriority="high" />
+
+  <!--
+    TODO ANTES DE PUBLICAR — só falta:
+    - Tracking: bloco de Google Ads / Meta Pixel comentado no fim do <head> —
+      descomentar e preencher o ID real quando tivermos a conta de anúncios
+    (WhatsApp, Instagram, CRM/RQE, formação, endereço e depoimentos já preenchidos com dados reais)
+  -->
+
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-XXXXXXXXXX');
+  </script>
+  -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --terra:      #B5654A;
+      --terra-dark: #8F4E38;
+      --taupe:      #D9C6B4;
+      --taupe-soft: #F4ECE3;
+      --bg:         #FFFCFA;
+      --white:      #ffffff;
+      --charcoal:   #2B211B;
+      --mid:        #7C6A5C;
+      --ff-display: 'Fraunces', Georgia, serif;
+      --ff-body:    'Inter', system-ui, sans-serif;
+      --max:        1100px;
+      --radius:     16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--charcoal);
+      font-family: var(--ff-body);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    .eyebrow {
+      font-family: var(--ff-body);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--terra);
+      color: var(--white);
+      font-family: var(--ff-body);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .03em;
+      text-decoration: none;
+      padding: 16px 34px;
+      border-radius: 100px;
+      box-shadow: 0 10px 30px rgba(181,101,74,.28);
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn:hover {
+      background: var(--terra-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 12px 34px rgba(143,78,56,.35);
+    }
+    .btn svg { flex-shrink: 0; }
+    .btn-lg { font-size: 15px; padding: 18px 42px; }
+
+    .divider {
+      width: 48px; height: 2px;
+      background: var(--terra);
+      border-radius: 2px;
+      margin: 24px 0;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* TOPBAR */
+    .topbar {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--taupe);
+      background: var(--white);
+    }
+    .topbar .container {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .topbar-name {
+      font-family: var(--ff-display);
+      font-size: 19px; font-weight: 600;
+      color: var(--charcoal); line-height: 1.2;
+    }
+    .topbar-name span {
+      display: block;
+      font-family: var(--ff-body);
+      font-size: 10.5px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--mid); margin-top: 2px;
+    }
+    .topbar-contact {
+      display: flex; align-items: center;
+      gap: 8px; font-size: 13px; font-weight: 500;
+      color: var(--charcoal);
+    }
+    .topbar-contact svg { color: var(--terra); flex-shrink: 0; }
+
+    /* HERO */
+    .hero { padding: 72px 24px 100px; overflow: hidden; }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .hero-content h1 {
+      font-family: var(--ff-display);
+      font-size: clamp(38px, 4.8vw, 60px);
+      font-weight: 400; line-height: 1.18;
+      color: var(--charcoal); margin-bottom: 22px;
+    }
+    .hero-content h1 em { font-style: italic; color: var(--terra); }
+    .hero-content p {
+      font-size: 17px; color: var(--mid);
+      max-width: 440px; margin-bottom: 36px; line-height: 1.75;
+    }
+    .hero-trust {
+      display: flex; align-items: center;
+      gap: 10px; margin-top: 24px;
+      font-size: 14px; color: var(--terra); letter-spacing: .04em;
+    }
+    .hero-trust span { color: var(--mid); font-size: 13px; letter-spacing: normal; }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .badge {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--terra-dark); background: var(--taupe-soft);
+      padding: 7px 14px; border-radius: 100px;
+    }
+    .hero-visual { position: relative; }
+    .hero-visual::before {
+      content: '';
+      position: absolute; top: -10%; right: -16%;
+      width: 90%; height: 90%;
+      background: var(--taupe);
+      border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%;
+      z-index: 0;
+    }
+    .hero-visual img {
+      position: relative; z-index: 1;
+      width: 100%; aspect-ratio: 4/5;
+      object-fit: cover; border-radius: var(--radius);
+      box-shadow: 0 24px 60px rgba(181,101,74,.18);
+    }
+    .hero-strip {
+      position: relative; z-index: 2;
+      margin: -34px 0 0 28px;
+      background: var(--white);
+      padding: 18px 26px; border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(43,33,27,.1);
+      display: inline-flex; flex-direction: column;
+      max-width: 240px;
+    }
+    .hero-strip p {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--mid); margin-bottom: 4px;
+    }
+    .hero-strip strong {
+      font-family: var(--ff-display);
+      font-size: 19px; font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    /* PAIN */
+    .pain { padding: 90px 24px; background: var(--taupe-soft); }
+    .pain-header { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+    .pain-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 400; color: var(--charcoal);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .pain-header h2 em { font-style: italic; color: var(--terra); }
+    .pain-header p { color: var(--mid); font-size: 15px; }
+    .pain-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .pain-item {
+      background: var(--white); border-radius: var(--radius);
+      padding: 30px 24px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .pain-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(181,101,74,.12);
+    }
+    .pain-icn {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--taupe-soft); color: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .pain-item h3 {
+      font-family: var(--ff-display);
+      font-size: 18px; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 8px;
+    }
+    .pain-item p { font-size: 13.5px; color: var(--mid); line-height: 1.7; }
+    .pain-note {
+      text-align: center; margin-top: 40px;
+      font-family: var(--ff-display); font-style: italic;
+      font-size: clamp(17px, 1.8vw, 21px);
+      color: var(--charcoal);
+    }
+    .pain-note em { font-style: italic; color: var(--terra); }
+
+    /* CHECKLIST */
+    .checklist { padding: 90px 24px; background: var(--white); }
+    .checklist .container {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 64px; align-items: center;
+    }
+    .checklist-img {
+      border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5;
+    }
+    .checklist-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .checklist h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 400; color: var(--charcoal);
+      line-height: 1.2; margin-bottom: 12px;
+    }
+    .checklist h2 em { font-style: italic; color: var(--terra); }
+    .checklist-sub { color: var(--mid); font-size: 15px; margin-bottom: 32px; max-width: 460px; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 18px; }
+    .check-list li {
+      display: flex; gap: 14px; align-items: flex-start;
+      font-size: 15.5px; color: var(--charcoal);
+    }
+    .check-list .check-icn {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--taupe-soft); color: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+
+    /* RESOURCES */
+    .resources { background: var(--taupe-soft); padding: 90px 24px; }
+    .resources .container {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 64px; align-items: center;
+    }
+    .resources-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 400; color: var(--charcoal);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .resources-header h2 em { font-style: italic; color: var(--terra); }
+    .resources-header > p {
+      color: var(--mid); font-size: 15px;
+      max-width: 480px; margin-bottom: 28px;
+    }
+    .resource-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .resource-pills span {
+      background: var(--white); border: 1px solid var(--taupe);
+      color: var(--charcoal); font-size: 13px; font-weight: 500;
+      padding: 9px 18px; border-radius: 100px;
+    }
+    .resources-img {
+      border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5;
+    }
+    .resources-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* QUOTE */
+    .quote { padding: 90px 24px; text-align: center; }
+    .quote .container { max-width: 760px; }
+    .quote p {
+      font-family: var(--ff-display); font-style: italic;
+      font-size: clamp(22px, 2.6vw, 32px);
+      line-height: 1.55; color: var(--charcoal);
+    }
+    .quote p em { color: var(--terra); font-style: italic; }
+
+    /* PROCEDURES */
+    .procedures { padding: 0 24px 100px; }
+    .procedures-header { text-align: center; margin-bottom: 56px; }
+    .procedures-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 400; color: var(--charcoal);
+    }
+    .procedures-header h2 em { font-style: italic; color: var(--terra); }
+    .procedures-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .procedure-card {
+      background: var(--white); border: 1px solid var(--taupe);
+      border-radius: var(--radius); padding: 32px 26px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .procedure-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(181,101,74,.14);
+    }
+    .procedure-icn {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--taupe-soft); color: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .procedure-card h3 {
+      font-family: var(--ff-display);
+      font-size: 20px; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 10px;
+    }
+    .procedure-card p { font-size: 14px; color: var(--mid); line-height: 1.7; }
+    .procedures-cta { text-align: center; margin-top: 48px; }
+
+    /* BIO */
+    .bio { padding: 90px 24px; background: var(--taupe-soft); }
+    .bio .container {
+      display: grid; grid-template-columns: 420px 1fr;
+      gap: 64px; align-items: center;
+    }
+    .bio-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 3/4; }
+    .bio-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .bio-content h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3.2vw, 46px);
+      font-weight: 400; line-height: 1.2;
+      color: var(--charcoal); margin-bottom: 8px;
+    }
+    .bio-content h2 em { font-style: italic; color: var(--terra); }
+    .credentials {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 14px; margin: 28px 0 32px;
+    }
+    .credentials li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 14.5px; color: var(--charcoal);
+    }
+    .credentials li .dot {
+      flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--terra); margin-top: 8px;
+    }
+
+    /* REVIEWS */
+    .reviews { padding: 90px 24px; background: var(--white); }
+    .reviews-header { text-align: center; margin-bottom: 56px; }
+    .reviews-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 400; color: var(--charcoal);
+    }
+    .reviews-header h2 em { font-style: italic; color: var(--terra); }
+    .reviews-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .review-card { background: var(--taupe-soft); padding: 32px; border-radius: var(--radius); }
+    .review-stars { display: flex; gap: 4px; margin-bottom: 18px; color: var(--terra); font-size: 14px; }
+    .review-card p {
+      font-size: 14.5px; color: var(--charcoal);
+      line-height: 1.75; font-style: italic; margin-bottom: 20px;
+    }
+    .review-author { font-size: 13px; font-weight: 600; color: var(--charcoal); }
+    .review-source {
+      font-size: 11px; color: var(--terra);
+      letter-spacing: .06em; text-transform: uppercase; margin-top: 2px;
+    }
+
+    /* FAQ */
+    .faq { padding: 90px 24px; background: var(--taupe-soft); }
+    .faq .container { max-width: 760px; }
+    .faq-header { text-align: center; margin-bottom: 48px; }
+    .faq-header h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 400; color: var(--charcoal);
+    }
+    .faq-header h2 em { font-style: italic; color: var(--terra); }
+    .faq-item {
+      background: var(--white); border-radius: var(--radius);
+      padding: 24px 28px; margin-bottom: 14px;
+    }
+    .faq-q {
+      font-family: var(--ff-display); font-size: 19px; font-weight: 600;
+      color: var(--charcoal); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q .toggle {
+      flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+      background: var(--taupe-soft);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--terra); font-size: 16px; font-weight: 600;
+    }
+    .faq-a { font-size: 14.5px; color: var(--mid); line-height: 1.75; margin-top: 14px; }
+
+    /* CTA FINAL */
+    .cta-final { background: var(--taupe); padding: 100px 24px; text-align: center; }
+    .cta-final h2 {
+      font-family: var(--ff-display);
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 400; color: var(--charcoal);
+      line-height: 1.25; margin-bottom: 16px;
+    }
+    .cta-final h2 em { font-style: italic; color: var(--terra-dark); }
+    .cta-final p {
+      font-size: 16px; color: var(--charcoal); margin-bottom: 40px;
+      max-width: 480px; margin-left: auto; margin-right: auto;
+      opacity: .8;
+    }
+    .cta-privacy { margin-top: 22px; font-size: 12.5px; color: var(--charcoal); opacity: .7; letter-spacing: .02em; }
+
+    /* FOOTER */
+    footer {
+      background: var(--white); padding: 56px 24px 32px;
+      border-top: 1px solid var(--taupe);
+    }
+    footer .container {
+      display: flex; flex-wrap: wrap;
+      justify-content: space-between; gap: 32px; margin-bottom: 28px;
+    }
+    .footer-name {
+      font-family: var(--ff-display); font-size: 20px; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 8px;
+    }
+    footer .footer-block p { font-size: 13px; color: var(--mid); line-height: 1.8; }
+    .footer-bottom {
+      text-align: center; font-size: 12px; color: var(--mid);
+      padding-top: 24px; border-top: 1px solid var(--taupe);
+    }
+
+    /* FLOATING WA */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      background: #25D366; color: var(--white);
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.4);
+      text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37,211,102,.5);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero .container, .checklist .container,
+      .resources .container, .bio .container { grid-template-columns: 1fr; }
+      .hero-content { order: 2; }
+      .hero-visual { order: 1; max-width: 420px; margin: 0 auto; }
+      .checklist-img { order: 1; max-width: 420px; margin: 0 auto; }
+      .resources-img { order: 1; max-width: 420px; margin: 0 auto; }
+      .bio-img { max-width: 360px; margin: 0 auto; }
+      .procedures-grid, .reviews-grid { grid-template-columns: 1fr; }
+      .pain-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 17px; }
+      .hero-content h1 { font-size: 37px; }
+      .hero-content p { font-size: 17px; }
+      .checklist h2, .resources-header h2, .procedures-header h2,
+      .bio-content h2, .reviews-header h2,
+      .faq-header h2, .cta-final h2, .pain-header h2 { font-size: 31px; }
+      .hero-strip { margin-left: 0; }
+      .pain-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="container">
+      <div class="topbar-name">
+        Dra. Vanessa Viríssimo Maciel
+        <span>Dermatologista · Florianópolis</span>
+      </div>
+      <div class="topbar-contact">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.116 1.523 5.847L.057 23.882l6.196-1.443A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.816 9.816 0 01-5.015-1.374l-.36-.214-3.727.978.995-3.638-.235-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        (48) 99653-3290
+      </div>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="eyebrow">Dermatologista em Florianópolis</span>
+        <h1>Pele saudável,<br/>resultado <em>natural</em><br/>e cuidado humanizado</h1>
+        <p>Consultas, tratamentos e tecnologias avançadas para rejuvenescimento, flacidez e saúde da pele — com protocolo exclusivo para cada paciente.</p>
+        <a href="https://wa.me/5548996533290?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Vanessa." target="_blank" rel="noopener" class="btn btn-lg wa-cta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.116 1.523 5.847L.057 23.882l6.196-1.443A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.816 9.816 0 01-5.015-1.374l-.36-.214-3.727.978.995-3.638-.235-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+          Agendar consulta pelo WhatsApp
+        </a>
+        <div class="hero-trust">★★★★★ <span>avaliações verificadas de pacientes</span></div>
+        <div class="hero-badges">
+          <span class="badge">Tratamentos personalizados</span>
+          <span class="badge">Tecnologia de ponta</span>
+          <span class="badge">Florianópolis, SC</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <img src="fotos/hero.jpeg" alt="Dra. Vanessa Viríssimo Maciel, dermatologista em Florianópolis" fetchpriority="high" decoding="async" />
+        <div class="hero-strip">
+          <p>Registro profissional</p>
+          <strong>CRM 23863 · RQE 23318</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pain">
+    <div class="container">
+      <div class="pain-header reveal">
+        <span class="eyebrow">Você não está sozinha</span>
+        <h2>Sintomas que <em>incomodam</em><br/>e têm solução com a dermatologia certa</h2>
+        <p>Muitas pessoas convivem com problemas de pele sem procurar ajuda especializada — seja por não saber que têm solução, ou por não encontrar o profissional certo.</p>
+      </div>
+      <div class="pain-grid">
+        <div class="pain-item reveal">
+          <div class="pain-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78l1.06 1.06L12 21l7.78-7.55 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+          <h3>Flacidez e perda de firmeza</h3>
+          <p>Rosto e corpo que perderam o contorno com o tempo, afetando a autoestima e a aparência.</p>
+        </div>
+        <div class="pain-item reveal">
+          <div class="pain-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 116 0c0 2-3 3-3 5"/><circle cx="12" cy="17.5" r=".6" fill="currentColor" stroke="none"/></svg></div>
+          <h3>Manchas e envelhecimento</h3>
+          <p>Manchas solares, melasma ou sinais de envelhecimento que não somem com produtos comuns.</p>
+        </div>
+        <div class="pain-item reveal">
+          <div class="pain-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
+          <h3>Acne, cicatrizes e textura</h3>
+          <p>Pele com poros dilatados, acne ativa ou marcas que comprometem o acabamento e a confiança.</p>
+        </div>
+        <div class="pain-item reveal">
+          <div class="pain-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+          <h3>Falta de diagnóstico preciso</h3>
+          <p>Anos testando produtos e tratamentos sem nunca ter uma avaliação dermatológica de verdade.</p>
+        </div>
+      </div>
+      <p class="pain-note reveal">Esses problemas <em>têm solução</em> — mas precisam do diagnóstico e protocolo certos.</p>
+    </div>
+  </section>
+
+  <section class="checklist">
+    <div class="container">
+      <div class="checklist-img reveal">
+        <img src="fotos/checklist.jpeg" alt="Dra. Vanessa Viríssimo Maciel realizando avaliação dermatológica com dermatoscópio" loading="lazy" decoding="async" />
+      </div>
+      <div class="reveal">
+        <span class="eyebrow">Atendimento completo</span>
+        <h2>Um cuidado pensado<br/>para sua pele de forma <em>completa</em></h2>
+        <p class="checklist-sub">Cada detalhe do atendimento é planejado para que você se sinta segura, bem cuidada e com um plano claro para a sua pele — do diagnóstico ao resultado.</p>
+        <ul class="check-list">
+          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Avaliação dermatológica individualizada e precisa</li>
+          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Protocolos exclusivos para cada tipo de pele</li>
+          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Equipamentos de última geração com eficácia comprovada</li>
+          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Resultados acompanhados de perto, do início ao fim</li>
+          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Harmonia facial com técnicas minimamente invasivas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="resources">
+    <div class="container">
+      <div class="resources-header reveal">
+        <span class="eyebrow">Tecnologia & ciência</span>
+        <h2>Recursos modernos para<br/>o seu <em>resultado</em></h2>
+        <p>A Dra. Vanessa utiliza tecnologias de ponta selecionadas com critério — sempre com indicação individualizada e foco em segurança e resultado.</p>
+        <div class="resource-pills">
+          <span>Toxina Botulínica</span>
+          <span>Bioestimuladores</span>
+          <span>Preenchimento</span>
+          <span>Liftera 2</span>
+          <span>Laser Etherea</span>
+          <span>Fios de PDO</span>
+          <span>Medicina Regenerativa</span>
+        </div>
+      </div>
+      <div class="resources-img reveal">
+        <img src="fotos/resources.jpeg" alt="Dra. Vanessa Viríssimo Maciel com produto de tratamento dermatológico" loading="lazy" decoding="async" />
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <div class="container">
+      <p class="reveal">Cada pele é única. <em>Por isso cada tratamento também deve ser.</em> Com indicação responsável, protocolos individualizados e foco em resultados naturais.</p>
+    </div>
+  </section>
+
+  <section class="procedures">
+    <div class="container">
+      <div class="procedures-header reveal">
+        <span class="eyebrow">Tratamentos & Procedimentos</span>
+        <h2>Tecnologia de ponta<br/>com <em>resultado real</em></h2>
+      </div>
+      <div class="procedures-grid">
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
+          <h3>Toxina Botulínica</h3>
+          <p>Rugas de expressão, sudorese excessiva, bruxismo e cicatrizes, com aplicação precisa e resultado natural.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M7 12h10"/></svg></div>
+          <h3>Bioestimuladores de Colágeno</h3>
+          <p>Estímulo de colágeno para rosto e corpo, recuperando firmeza e qualidade de pele ao longo do tempo.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-8-6-8-11a4 4 0 014-4 4.4 4.4 0 014 2.5A4.4 4.4 0 0116 6a4 4 0 014 4c0 5-4 8-8 11z"/></svg></div>
+          <h3>Preenchimento com Ácido Hialurônico</h3>
+          <p>Lábios, olheiras, malar e mandíbula, com volumização e harmonização de forma equilibrada e natural.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6"/><circle cx="12" cy="12" r="4"/></svg></div>
+          <h3>Liftera 2 — Ultrassom Microfocado</h3>
+          <p>Lifting facial de precisão para flacidez e contorno do rosto, papada, abdômen e flancos, sem cirurgia.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div>
+          <h3>Laser Etherea</h3>
+          <p>Manchas, rugas finas, poros dilatados, rosácea, cicatrizes e estrias tratados com precisão e segurança.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v18M18 3v18M6 8h12M6 16h12"/></svg></div>
+          <h3>Fios de PDO</h3>
+          <p>Sustentação e estímulo de colágeno para pálpebras, bochechas e sobrancelhas, com efeito lifting sutil.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+          <h3>Microagulhamento com Drug Delivery</h3>
+          <p>Queda de cabelo, melasma, cicatrizes de acne e poros dilatados, com liberação transdérmica de ativos.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Medicina Regenerativa</h3>
+          <p>PRP e exossomos para queda de cabelo, manchas, acne e rugas, estimulando a regeneração da própria pele.</p>
+        </div>
+        <div class="procedure-card reveal">
+          <div class="procedure-icn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
+          <h3>Procedimentos Cirúrgicos</h3>
+          <p>Labioplastia, exérese de sinais e lesões, e outros procedimentos cirúrgicos dermatológicos.</p>
+        </div>
+      </div>
+      <div class="procedures-cta">
+        <a href="https://wa.me/5548996533290?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Vanessa." target="_blank" rel="noopener" class="btn wa-cta">Agendar consulta pelo WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="bio">
+    <div class="container">
+      <div class="bio-img reveal">
+        <img src="fotos/bio.jpeg" alt="Dra. Vanessa Viríssimo Maciel" loading="lazy" decoding="async" />
+      </div>
+      <div class="bio-content reveal">
+        <span class="eyebrow">A especialista</span>
+        <h2>Sou a Dra. Vanessa<br/><em>Viríssimo Maciel</em></h2>
+        <div class="divider"></div>
+        <ul class="credentials">
+          <li><span class="dot"></span>Médica dermatologista — Hospital Universitário da UFSC (HU-UFSC)</li>
+          <li><span class="dot"></span>CRM 23863 · RQE 23318 — Florianópolis, SC</li>
+          <li><span class="dot"></span>Membro Titular da Sociedade Brasileira de Dermatologia (SBD)</li>
+          <li><span class="dot"></span>Especialidade em rejuvenescimento, flacidez e saúde da pele</li>
+          <li><span class="dot"></span>Atendimento humanizado e baseado em ciência, com foco em resultado natural</li>
+        </ul>
+        <a href="https://wa.me/5548996533290?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20falar%20com%20a%20equipe%20da%20Dra.%20Vanessa." target="_blank" rel="noopener" class="btn wa-cta">Falar com a clínica</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="reviews">
+    <div class="container">
+      <div class="reviews-header reveal">
+        <span class="eyebrow">Depoimentos</span>
+        <h2>Cuidar da sua pele vai<br/>além do <em>tratamento</em></h2>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p>"Atendimento impecável! A Vanessa é extremamente competente, atualizada e cuidadosa. Explica cada etapa do tratamento, avalia com muita precisão e transmite uma confiança enorme. A experiência sempre é excelente, tanto no consultório quanto no acompanhamento. Já indiquei para várias pessoas!"</p>
+          <div class="review-author">Fernanda Degani</div>
+          <div class="review-source">Opinião verificada</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p>"A Dra. Vanessa é simplesmente maravilhosa! Sempre atende com extrema atenção, delicadeza e profissionalismo. Além de muito competente, transmite segurança e cuidado em cada consulta. É o tipo de médica que une conhecimento técnico com um olhar humano e acolhedor. Confio plenamente e recomendo de olhos fechados!"</p>
+          <div class="review-author">Sabrina S Menezes</div>
+          <div class="review-source">Opinião verificada</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p>"Excelente profissional, tem um olhar atualizado na dermatologia e muita atenção à necessidade de cada paciente. Excelente como pessoa, querida, atenciosa, melhor dermato, faz de tudo pra fazer o melhor."</p>
+          <div class="review-author">Claudia Fabiana</div>
+          <div class="review-source">Opinião verificada</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p>"Dra. Vanessa atende meu marido em consulta dermatológica e eu em procedimentos, ela é excelente em tudo o que faz. Já indiquei para várias pessoas e continuarei indicando."</p>
+          <div class="review-author">Livia</div>
+          <div class="review-source">Opinião verificada</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p>"Amei a consulta com a Dra. Vanessa! Ela é um amor, super atenciosa e delicada. Me explicou cada detalhe do tratamento com a maior paciência e me passou muita confiança. Recomendo muito!"</p>
+          <div class="review-author">Samália</div>
+          <div class="review-source">Opinião verificada</div>
+        </div>
+        <div class="review-card reveal">
+          <div class="review-stars">★★★★★</div>
+          <p>"A Dra Vanessa foi atenciosa e atenta a cada detalhe sobre os procedimentos que foram feitos, teve o cuidado de ouvir e entender como eu gostaria que fosse e tirou toda a ansiedade que eu sentia. Não senti nenhuma dor e pude tirar dúvidas que surgiram após a consulta. Eu amei o resultado!"</p>
+          <div class="review-author">JK</div>
+          <div class="review-source">Opinião verificada</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq">
+    <div class="container">
+      <div class="faq-header reveal">
+        <span class="eyebrow">Dúvidas frequentes</span>
+        <h2>Suas perguntas,<br/>respondidas com <em>clareza</em></h2>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Os procedimentos são seguros? <span class="toggle">+</span></div>
+        <div class="faq-a">Sim. Todos os procedimentos são realizados pela Dra. Vanessa com formação especializada, em clínica equipada com tecnologias certificadas. Cada indicação é feita com base na avaliação individual de cada paciente.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Os resultados vão ficar naturais? <span class="toggle">+</span></div>
+        <div class="faq-a">Sempre. O objetivo de cada protocolo é o resultado mais harmonioso, natural e personalizado possível — respeitando as características únicas de cada paciente.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Qual o tempo de recuperação? <span class="toggle">+</span></div>
+        <div class="faq-a">Varia conforme o procedimento. A maioria dos tratamentos tem recuperação rápida, permitindo retorno às atividades cotidianas em pouco tempo. A Dra. Vanessa acompanha cada paciente durante todo o processo.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Quantas sessões são necessárias? <span class="toggle">+</span></div>
+        <div class="faq-a">Depende do caso avaliado. Na consulta, a Dra. Vanessa analisa o histórico e as necessidades da sua pele e indica o protocolo mais adequado, com o número certo de sessões para o seu objetivo.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-q">Tem opções de pagamento? <span class="toggle">+</span></div>
+        <div class="faq-a">Sim, oferecemos condições de parcelamento. Fale com nossa equipe pelo WhatsApp para conhecer as opções disponíveis para o seu caso.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-final">
+    <div class="container reveal">
+      <span class="eyebrow">Dê o primeiro passo</span>
+      <h2>Sua pele merece<br/><em>cuidado especializado</em></h2>
+      <p>Fale com nossa equipe agora. Diagnóstico preciso, protocolo individualizado e resultado real — no seu tempo.</p>
+      <a href="https://wa.me/5548996533290?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Vanessa." target="_blank" rel="noopener" class="btn btn-lg wa-cta">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.116 1.523 5.847L.057 23.882l6.196-1.443A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.816 9.816 0 01-5.015-1.374l-.36-.214-3.727.978.995-3.638-.235-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Iniciar conversa no WhatsApp
+      </a>
+      <p class="cta-privacy">Atendimento humanizado, do primeiro contato ao resultado final</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-block">
+        <div class="footer-name">Dra. Vanessa Viríssimo Maciel</div>
+        <p>Dermatologia Médica e Estética<br/>Dermatologista pelo HU-UFSC · Membro Titular da SBD<br/>Florianópolis, SC</p>
+      </div>
+      <div class="footer-block">
+        <p>WhatsApp: (48) 99653-3290<br/>Rod. José Carlos Daux — Saco Grande<br/>Florianópolis - SC, 88032-005<br/>Instagram: <a href="https://www.instagram.com/vanessa.macieldermato/" target="_blank" rel="noopener" style="color: inherit;">@vanessa.macieldermato</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      As informações deste site têm caráter informativo e não substituem a consulta médica. CRM 23863 · RQE 23318.
+    </div>
+  </footer>
+
+  <a href="https://wa.me/5548996533290?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20agendar%20uma%20consulta%20com%20a%20Dra.%20Vanessa." target="_blank" rel="noopener" class="wa-float wa-cta" aria-label="WhatsApp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.116 1.523 5.847L.057 23.882l6.196-1.443A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.816 9.816 0 01-5.015-1.374l-.36-.214-3.727.978.995-3.638-.235-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+  </a>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const answer = item.querySelector('.faq-a');
+        const toggle = q.querySelector('.toggle');
+        const isOpen = answer.style.display === 'block';
+        document.querySelectorAll('.faq-a').forEach(a => a.style.display = 'none');
+        document.querySelectorAll('.toggle').forEach(t => t.textContent = '+');
+        if (!isOpen) { answer.style.display = 'block'; toggle.textContent = '−'; }
+      });
+    });
+    document.querySelectorAll('.faq-a').forEach(a => a.style.display = 'none');
+
+    document.querySelectorAll('.wa-cta').forEach(el => {
+      el.addEventListener('click', () => {
+        try { gtag('event', 'conversion', {'send_to': 'AW-XXXXXXXXXX/PLACEHOLDER'}); } catch (_) {}
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(el => observer.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('is-visible'));
+    }
+  </script>
+</body>
+</html>
