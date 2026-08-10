@@ -10,22 +10,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="fotos/hero.jpeg" fetchpriority="high" />
 
-  <!--
-    TODO ANTES DE PUBLICAR — só falta:
-    - Tracking: bloco de Google Ads / Meta Pixel comentado no fim do <head> —
-      descomentar e preencher o ID real quando tivermos a conta de anúncios
-    (WhatsApp, Instagram, CRM/RQE, formação, endereço e depoimentos já preenchidos com dados reais)
-  -->
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '2467251473705513');
+    fbq('track', 'PageView');
+  </script>
 
-  <!--
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXXX"></script>
+  <!-- Google Ads -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18382369093"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'AW-XXXXXXXXXX');
+    gtag('config', 'AW-18382369093');
   </script>
-  -->
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -511,6 +514,7 @@
   </style>
 </head>
 <body>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2467251473705513&ev=PageView&noscript=1" /></noscript>
 
   <div class="topbar">
     <div class="container">
@@ -849,9 +853,14 @@
     });
     document.querySelectorAll('.faq-a').forEach(a => a.style.display = 'none');
 
+    // Contact event on WhatsApp click (Meta Pixel + Google Ads)
     document.querySelectorAll('.wa-cta').forEach(el => {
       el.addEventListener('click', () => {
-        try { gtag('event', 'conversion', {'send_to': 'AW-XXXXXXXXXX/PLACEHOLDER'}); } catch (_) {}
+        try {
+          const eventId = (crypto.randomUUID && crypto.randomUUID()) || (Date.now() + '-' + Math.random().toString(36).slice(2));
+          fbq('track', 'Contact', {}, { eventID: eventId });
+        } catch (_) {}
+        try { gtag('event', 'conversion', {'send_to': 'AW-18382369093/Kr_lCI7mqN8cEMXisr1E'}); } catch (_) {}
       });
     });
 
