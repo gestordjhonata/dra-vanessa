@@ -8,7 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="fotos/hero.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="fotos/hero.webp" media="(max-width: 900px)" fetchpriority="high" />
+  <link rel="preload" as="image" href="fotos/hero-wide.webp" media="(min-width: 901px)" fetchpriority="high" />
 
   <!-- Meta Pixel -->
   <script>
@@ -172,6 +173,7 @@
       padding: 7px 14px; border-radius: 100px;
     }
     .hero-visual { position: relative; }
+    .hero-visual picture { display: block; }
     .hero-visual::before {
       content: '';
       position: absolute; top: -10%; right: -16%;
@@ -204,6 +206,23 @@
       font-family: var(--ff-display);
       font-size: 19px; font-weight: 600;
       color: var(--charcoal);
+    }
+
+    /* HERO — no desktop a foto sangra até a borda direita da tela */
+    @media (min-width: 901px) {
+      .hero { padding-left: 0; padding-right: 0; }
+      .hero .container {
+        max-width: none; margin: 0;
+        padding: 0 0 0 max(48px, calc((100vw - 1100px) / 2 + 24px));
+        grid-template-columns: minmax(0, 460px) minmax(0, 1fr);
+        gap: 56px;
+      }
+      .hero-visual { width: 100%; max-width: 980px; justify-self: end; }
+      .hero-visual::before { right: auto; left: -7%; }
+      .hero-visual img {
+        aspect-ratio: 1.4 / 1;
+        border-radius: var(--radius) 0 0 var(--radius);
+      }
     }
 
     /* PAIN */
@@ -548,7 +567,10 @@
       </div>
 
       <div class="hero-visual">
-        <img src="fotos/hero.webp" alt="Dra. Vanessa Viríssimo Maciel, dermatologista em Florianópolis" fetchpriority="high" decoding="async" />
+        <picture>
+          <source media="(min-width: 901px)" srcset="fotos/hero-wide.webp" />
+          <img src="fotos/hero.webp" alt="Dra. Vanessa Viríssimo Maciel, dermatologista em Florianópolis" fetchpriority="high" decoding="async" />
+        </picture>
         <div class="hero-strip">
           <p>Registro profissional</p>
           <strong>CRM 23863 · RQE 23318</strong>
