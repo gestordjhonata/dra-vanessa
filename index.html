@@ -22,13 +22,14 @@
     fbq('track', 'PageView');
   </script>
 
-  <!-- Google Ads -->
+  <!-- Google Ads + GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18382369093"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'AW-18382369093');
+    gtag('config', 'G-5WZXL7Z48B');
   </script>
 
   <style>
@@ -875,7 +876,7 @@
     });
     document.querySelectorAll('.faq-a').forEach(a => a.style.display = 'none');
 
-    // Contact event on WhatsApp click (Meta Pixel + Google Ads)
+    // Contact event on WhatsApp click (Meta Pixel + Google Ads + GA4)
     document.querySelectorAll('.wa-cta').forEach(el => {
       el.addEventListener('click', () => {
         try {
@@ -883,6 +884,7 @@
           fbq('track', 'Contact', {}, { eventID: eventId });
         } catch (_) {}
         try { gtag('event', 'conversion', {'send_to': 'AW-18382369093/Kr_lCI7mqN8cEMXisr1E'}); } catch (_) {}
+        try { gtag('event', 'contact_whatsapp'); } catch (_) {}
       });
     });
 
