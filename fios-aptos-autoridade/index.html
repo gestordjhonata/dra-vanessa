@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fios Aptos em Florianópolis | Dra. Vanessa Viríssimo Maciel</title>
-  <meta name="description" content="Lifting facial sem cirurgia com Fios Aptos. Avaliação com a Dra. Vanessa Viríssimo Maciel, dermatologista especialista e certificada em Fios Aptos, em Florianópolis." />
+  <meta name="description" content="Referência em Fios Aptos em Florianópolis. Avaliação com a Dra. Vanessa Viríssimo Maciel, dermatologista especialista e certificada em Fios Aptos." />
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="preload" as="video" href="media/apresentacao.mp4" fetchpriority="high" />
+  <link rel="preload" as="video" href="../fios-aptos/media/apresentacao.mp4" fetchpriority="high" />
 
   <!-- Meta Pixel -->
   <script>
@@ -34,12 +34,11 @@
 
   <style>
     /*
-      Página de transição (não é o site principal). Mesmos design tokens do
-      ../index.html (paleta terracota/taupe, Fraunces+Inter) pra manter a
-      identidade, mas composição totalmente diferente: hero em tela cheia
-      com a foto da Vanessa de fundo, headline grande sobre a imagem,
-      promessa curta, benefícios e um único CTA que abre o pop-up de 2
-      passos (nome/whats -> pergunta de qualificação -> WhatsApp).
+      Variante B de ../fios-aptos/index.html - MESMA mecânica (pop-up,
+      rastreio via Ref/track-click, envio ao Pixel/Google no fim do
+      passo 2), copy diferente: hero de autoridade + corpo em cima da dor,
+      pra comparar as duas como teste A/B de verdade. Ver LP_LABEL no
+      script pra como a diferenciação chega no WhatsApp/Pixel/GA4.
     */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -79,7 +78,6 @@
       letter-spacing: .2em; text-transform: uppercase; color: var(--terra);
       margin-bottom: 16px; display: block;
     }
-    .eyebrow-onphoto { color: var(--terra-light); }
 
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px;
@@ -100,11 +98,7 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== HERO: chamada + vídeo =====
-       Mobile: empilhado (texto em cima, vídeo embaixo com aspect-ratio
-       fixo - nunca depende de "% da altura do pai"). Desktop: lado a
-       lado, texto à esquerda, vídeo à direita, cada bloco com sua própria
-       largura - nenhum dos dois é posicionado em cima do outro. */
+    /* ===== HERO: chamada + vídeo ===== */
     .hero {
       position: relative;
       color: var(--white);
@@ -116,9 +110,9 @@
     }
     .hero-content h1 {
       font-family: var(--ff-display);
-      font-size: clamp(34px, 7vw, 52px);
-      font-weight: 500; line-height: 1.1; letter-spacing: -.01em;
-      margin-bottom: 20px; max-width: 560px;
+      font-size: clamp(32px, 6.6vw, 48px);
+      font-weight: 500; line-height: 1.14; letter-spacing: -.01em;
+      margin-bottom: 20px; max-width: 580px;
       text-wrap: balance;
     }
     .hero-content h1 em { font-style: italic; color: var(--terra-light); font-weight: 400; }
@@ -133,8 +127,6 @@
       padding: 8px 15px; border-radius: 100px;
     }
 
-    /* Painel do vídeo: aspect-ratio define a altura sozinho (sem % de
-       nada), com pôster (foto real) até a pessoa clicar em assistir. */
     .hero-video {
       position: relative; aspect-ratio: 4 / 5; overflow: hidden;
       background: #14100e; cursor: pointer;
@@ -166,28 +158,27 @@
     .hero-video.is-playing .play-btn,
     .hero-video.is-playing .hero-video-scrim { display: none; }
 
-    /* Lado a lado a partir de 901px. */
     @media (min-width: 901px) {
       .hero { display: flex; min-height: 100svh; }
       .hero-content { flex: 1 1 46%; padding: 64px 64px; }
       .hero-video { flex: 1 1 54%; aspect-ratio: auto; align-self: stretch; }
     }
 
-    /* ===== PROMESSA ===== */
+    /* ===== DOR ===== */
     .promise-band { padding: 76px 24px; text-align: center; background: var(--white); }
     .promise-band .container { max-width: 780px; }
     .promise-band p {
       font-family: var(--ff-display); font-style: italic;
-      font-size: clamp(22px, 2.8vw, 33px); line-height: 1.5; color: var(--charcoal);
+      font-size: clamp(21px, 2.6vw, 30px); line-height: 1.55; color: var(--charcoal);
     }
     .promise-band p em { font-style: italic; color: var(--terra); }
     .promise-stats { display: flex; justify-content: center; gap: 48px; margin-top: 44px; flex-wrap: wrap; }
-    .promise-stat strong { display: block; font-family: var(--ff-display); font-size: 30px; color: var(--terra); }
+    .promise-stat strong { display: block; font-family: var(--ff-display); font-size: 24px; color: var(--terra); }
     .promise-stat span { font-size: 12px; color: var(--mid); text-transform: uppercase; letter-spacing: .06em; }
 
-    /* ===== O QUE AJUDA (benefícios) ===== */
+    /* ===== O QUE MUDA (resposta à dor) ===== */
     .benefits { padding: 20px 24px 90px; background: var(--white); }
-    .benefits-header { text-align: center; max-width: 620px; margin: 0 auto 48px; }
+    .benefits-header { text-align: center; max-width: 640px; margin: 0 auto 48px; }
     .benefits-header h2 {
       font-family: var(--ff-display); font-size: clamp(28px, 3.4vw, 44px);
       font-weight: 400; color: var(--charcoal); line-height: 1.2;
@@ -303,7 +294,7 @@
     }
     @media (max-width: 600px) {
       body { font-size: 17px; }
-      .hero-content h1 { font-size: 36px; }
+      .hero-content h1 { font-size: 33px; }
       .benefits-header h2, .cta-final h2 { font-size: 28px; }
       .benefits-grid { grid-template-columns: 1fr; }
       .modal { padding: 28px 22px; }
@@ -311,36 +302,31 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; }
       .reveal { opacity: 1; transform: none; }
-      .hero-scroll { animation: none; }
     }
   </style>
 </head>
 <body>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=3725674297727276&ev=PageView&noscript=1" /></noscript>
 
-  <!-- ===== HERO: chamada + vídeo lado a lado =====
-       Estrutura simples de propósito, depois de 2 rodadas de bug com
-       overlay/grid: dois blocos NORMAIS lado a lado (flex), cada um com seu
-       próprio tamanho - nenhum dos dois depende de "% da altura do pai"
-       calculada em cima da hora, que foi a causa dos bugs anteriores. -->
+  <!-- ===== HERO: autoridade ===== -->
   <section class="hero">
     <div class="hero-content">
-      <span class="eyebrow">Fios Aptos · Florianópolis</span>
-      <h1>A firmeza que sua pele<br/>já teve, <em>de volta</em> —<br/>sem cirurgia.</h1>
-      <p class="promise">Numa sessão, os Fios Aptos devolvem sustentação à sua pele. Nos meses seguintes, seu próprio colágeno continua o trabalho — até você se olhar no espelho e reconhecer aquele rosto mais firme e descansado.</p>
+      <span class="eyebrow">Fios Aptos · Referência em Florianópolis</span>
+      <h1>Florianópolis tem uma das <em>grandes referências</em> em Fios Aptos do Brasil.</h1>
+      <p class="promise">A Dra. Vanessa Viríssimo Maciel é especialista e certificada em Fios Aptos, com anos dedicados à dermatologia. Antes de decidir qualquer coisa sobre o seu rosto, converse com quem realmente entende do assunto.</p>
       <button type="button" class="btn btn-lg" onclick="openModal()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        Quero saber se sou candidata
+        Quero minha avaliação agora
       </button>
       <div class="hero-badges">
-        <span class="badge">Sem cirurgia, sem cortes</span>
-        <span class="badge">Resultado natural e progressivo</span>
+        <span class="badge">Certificação em Fios Aptos</span>
+        <span class="badge">Referência em Florianópolis</span>
       </div>
     </div>
 
     <div class="hero-video" id="heroVideoBox" onclick="playHeroVideo()">
       <video id="heroVideo" poster="../fotos/hero.webp" preload="metadata" playsinline aria-label="Vídeo de apresentação da Dra. Vanessa Viríssimo Maciel">
-        <source src="media/apresentacao.mp4" type="video/mp4" />
+        <source src="../fios-aptos/media/apresentacao.mp4" type="video/mp4" />
       </video>
       <div class="hero-video-scrim"></div>
       <button type="button" class="play-btn" id="playBtn" aria-label="Assistir vídeo de apresentação">
@@ -350,45 +336,45 @@
     </div>
   </section>
 
-  <!-- ===== PROMESSA ===== -->
+  <!-- ===== DOR ===== -->
   <section class="promise-band">
     <div class="container reveal">
-      <p>Isso não é sobre esticar a pele. É sobre <em>devolver o que ela perdeu</em> — sustentação na hora, e um colágeno que volta a trabalhar por você, mês após mês.</p>
+      <p>Você evita fotos de perfil. Se olha no espelho e sente que o rosto <em>não acompanha</em> como você se sente por dentro. Já tentou creme, procedimento, promessa — e a flacidez continua ali.</p>
       <div class="promise-stats">
-        <div class="promise-stat"><strong>Sem cortes</strong><span>procedimento em consultório</span></div>
-        <div class="promise-stat"><strong>Até 24 meses</strong><span>de resultado, com os cuidados certos</span></div>
-        <div class="promise-stat"><strong>Recuperação rápida</strong><span>anestesia local, sem tempo parado</span></div>
+        <div class="promise-stat"><strong>Evita fotos</strong><span>de perfil ou de certos ângulos</span></div>
+        <div class="promise-stat"><strong>Já tentou de tudo</strong><span>sem um resultado que realmente ficasse</span></div>
+        <div class="promise-stat"><strong>Medo de exagerar</strong><span>e não se reconhecer no resultado</span></div>
       </div>
     </div>
   </section>
 
-  <!-- ===== O QUE AJUDA ===== -->
+  <!-- ===== ISSO NÃO PRECISA CONTINUAR ASSIM ===== -->
   <section class="benefits">
     <div class="container">
       <div class="benefits-header reveal">
-        <span class="eyebrow">Pra quem é indicado</span>
-        <h2>O que <em>muda</em> pra você</h2>
+        <span class="eyebrow">Fale com quem entende</span>
+        <h2><em>Isso</em> não precisa continuar assim</h2>
       </div>
       <div class="benefits-grid">
         <div class="benefit-card reveal">
-          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78l1.06 1.06L12 21l7.78-7.55 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-          <h3>O contorno do rosto de volta</h3>
-          <p>Bochechas e mandíbula com a sustentação que a flacidez foi tirando aos poucos.</p>
+          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4M2 12a10 10 0 1020 0 10 10 0 00-20 0z"/></svg></div>
+          <h3>Diagnóstico de verdade</h3>
+          <p>Uma avaliação que entende a sua pele, não um protocolo genérico igual pra todo mundo.</p>
         </div>
         <div class="benefit-card reveal">
-          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
-          <h3>Aquele ângulo que você evita</h3>
-          <p>Papada e pescoço mais firmes, sem pensar duas vezes antes de uma foto de perfil.</p>
+          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z"/></svg></div>
+          <h3>Indicação com segurança</h3>
+          <p>Anos de prática em Fios Aptos por trás de cada indicação — sem exagero, sem promessa vazia.</p>
         </div>
         <div class="benefit-card reveal">
           <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <h3>Um olhar mais aberto</h3>
-          <p>Sobrancelha caída com um lifting sutil — sem mudar quem você é.</p>
+          <h3>Resultado que parece seu</h3>
+          <p>Naturalidade em primeiro lugar — sem mudar quem você é, só devolver o que a flacidez levou.</p>
         </div>
         <div class="benefit-card reveal">
           <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-8-6-8-11a4 4 0 014-4 4.4 4.4 0 014 2.5A4.4 4.4 0 0116 6a4 4 0 014 4c0 5-4 8-8 11z"/></svg></div>
           <h3>Sem passar por cirurgia</h3>
-          <p>Resultado real, sem cortes, sem anestesia geral, sem semanas de recuperação.</p>
+          <p>Uma alternativa real pra quem já decidiu que não quer cortes nem semanas de recuperação.</p>
         </div>
       </div>
     </div>
@@ -400,7 +386,7 @@
       <div class="trust-img"><img src="../fotos/hero.webp" alt="Dra. Vanessa Viríssimo Maciel" loading="lazy" decoding="async" /></div>
       <div class="trust-text">
         <strong>Dra. Vanessa Viríssimo Maciel</strong>
-        <p>CRM/SC 23863 · RQE 23318 · Especialista pela SBD · Especialização e Certificação em Fios Aptos. Cada indicação nasce de uma avaliação individual — o que funciona pra você, não uma fórmula pronta.</p>
+        <p>CRM/SC 23863 · RQE 23318 · Especialista pela SBD · Especialização e Certificação em Fios Aptos, referência no tratamento em Florianópolis. Cada indicação nasce de uma avaliação individual.</p>
       </div>
     </div>
   </section>
@@ -408,10 +394,10 @@
   <!-- ===== CTA FINAL ===== -->
   <section class="cta-final">
     <div class="container reveal">
-      <span class="eyebrow">Dê o primeiro passo</span>
-      <h2>Descubra se os Fios Aptos<br/><em>são o caminho pra você</em></h2>
+      <span class="eyebrow">Fale com quem entende</span>
+      <h2>Converse com uma <em>referência real</em><br/>em Fios Aptos</h2>
       <p>Responda 2 perguntas rápidas e veja os horários disponíveis no WhatsApp da Dra. Vanessa.</p>
-      <button type="button" class="btn btn-lg" onclick="openModal()">Quero saber se sou candidata</button>
+      <button type="button" class="btn btn-lg" onclick="openModal()">Quero minha avaliação agora</button>
       <p class="cta-privacy">Suas respostas são usadas só para organizar seu atendimento.</p>
     </div>
   </section>
@@ -421,7 +407,7 @@
   </footer>
 
   <div class="sticky-cta">
-    <button type="button" class="btn" onclick="openModal()">Quero saber se sou candidata</button>
+    <button type="button" class="btn" onclick="openModal()">Quero minha avaliação agora</button>
   </div>
 
   <!-- ===== POP-UP ===== -->
@@ -491,20 +477,15 @@
   <script>
     /*
       Ponte de rastreio (equivalente ao snippet do GTM documentado em
-      docs/google-ads-whatsapp.md do repo rastreamento-wpp, adaptado pra
-      inline porque esse site não usa Google Tag Manager). Diferença: aqui
-      o "clique" que importa é o botão final do pop-up, não um link direto
-      - por isso o código é gerado e o /api/track-click é chamado no load
-      da página (assim que sabemos que veio de anúncio), e o wa.me só é
-      montado no fim do fluxo.
+      docs/google-ads-whatsapp.md do repo rastreamento-wpp). Idêntica à
+      ../fios-aptos/index.html - o que muda entre as duas é só o
+      LP_LABEL abaixo, que carimba qual página gerou o lead em 3 lugares:
+      mensagem do WhatsApp, evento do Pixel e evento do GA4.
     */
     const TRACK_CLIENT = 'vanessa';
     const TRACK_ENDPOINT = 'https://rastreio-wpp.pages.dev/api/track-click';
     const WHATSAPP_NUMBER = '5548996533290';
-    // Identifica esta página nas 3 pontas (mensagem do WhatsApp, evento do
-    // Pixel, evento do GA4) - é o que permite comparar esta versão contra
-    // outra (ex.: fios-aptos-autoridade) sem depender só do Ref/UTM.
-    const LP_LABEL = 'Transformação';
+    const LP_LABEL = 'Autoridade';
 
     function getCookie(name) {
       const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -564,8 +545,6 @@
       video.controls = true;
       video.play().then(() => {
         box.classList.add('is-playing');
-        // Depois que o vídeo começa, quem manda é o controle nativo -
-        // tira o clique daqui pra não brigar com o botão de pausa dele.
         box.onclick = null;
       }).catch(() => {});
     }
@@ -647,10 +626,8 @@
 
       // Monta o texto final e o link do WhatsApp com o Ref (se houver).
       // A etiqueta [LP: ...] entra ANTES do Ref e não atrapalha o regex que
-      // o webhook usa pra achar o código (/\bRef:\s*([A-Za-z0-9]{6})\b/i) -
-      // ela só ajuda quem lê a conversa a saber de qual página o lead veio.
-      // Linguagem genérica de propósito - nunca menciona a opção de saúde
-      // escolhida no texto que vai pro Meta/Google, só na mensagem em si.
+      // o webhook usa pra achar o código - só ajuda quem lê a conversa a
+      // saber de qual página o lead veio.
       let text = 'Olá! Sou ' + leadName + ', vim pela página de Fios Aptos e quero saber mais (' + leadNeed + '). [LP: ' + LP_LABEL + ']';
       if (refCode) text += ' Ref: ' + refCode;
       const url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(text);
