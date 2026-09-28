@@ -100,76 +100,77 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== HERO EM TELA CHEIA =====
-       Mobile: foto de fundo com degradê, texto ancorado embaixo (a foto
-       vertical deixa espaço embaixo do rosto). Desktop: split screen -
-       painel de texto sólido à esquerda, foto inteira e sem overlay à
-       direita, pra nunca cobrir o rosto da Vanessa. */
+    /* ===== HERO: chamada + vídeo =====
+       Mobile: empilhado (texto em cima, vídeo embaixo com aspect-ratio
+       fixo - nunca depende de "% da altura do pai"). Desktop: lado a
+       lado, texto à esquerda, vídeo à direita, cada bloco com sua própria
+       largura - nenhum dos dois é posicionado em cima do outro. */
     .hero {
       position: relative;
-      min-height: 100svh;
-      display: flex; align-items: flex-end;
-      overflow: hidden;
       color: var(--white);
-      /* Degradê nas cores dela (o vinho da blusa + a terracota da marca) -
-         serve de fundo enquanto o vídeo carrega e atrás do painel de texto. */
       background: linear-gradient(150deg, #1f130f 0%, #6b2a26 55%, var(--terra) 135%);
     }
-    .hero-media { position: absolute; inset: 0; z-index: 0; }
-    .hero-media video { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
-    .hero-scrim {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(0deg, rgba(31,19,15,.9) 0%, rgba(31,19,15,.6) 42%, rgba(31,19,15,.15) 68%, rgba(31,19,15,.3) 100%),
-        linear-gradient(100deg, rgba(31,19,15,.6) 0%, rgba(31,19,15,.1) 55%);
+    .hero-content {
+      padding: 96px 24px 48px;
+      display: flex; flex-direction: column; justify-content: center;
     }
-    .hero-content { position: relative; z-index: 2; padding: 0 24px 64px; width: 100%; }
-    .hero-content .container { max-width: var(--max); }
     .hero-content h1 {
       font-family: var(--ff-display);
-      font-size: clamp(40px, 7.5vw, 62px);
-      font-weight: 500; line-height: 1.06; letter-spacing: -.01em;
-      margin-bottom: 22px; max-width: 640px;
+      font-size: clamp(34px, 7vw, 52px);
+      font-weight: 500; line-height: 1.1; letter-spacing: -.01em;
+      margin-bottom: 20px; max-width: 560px;
       text-wrap: balance;
     }
     .hero-content h1 em { font-style: italic; color: var(--terra-light); font-weight: 400; }
     .hero-content .promise {
-      font-size: clamp(16px, 1.7vw, 18px); font-weight: 500;
-      max-width: 480px; margin-bottom: 34px; opacity: .92; line-height: 1.7;
+      font-size: 16px; font-weight: 500;
+      max-width: 480px; margin-bottom: 30px; opacity: .92; line-height: 1.7;
     }
-    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
     .badge {
       font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
       color: var(--ink); background: rgba(255,255,255,.92);
       padding: 8px 15px; border-radius: 100px;
     }
-    .hero-scroll {
-      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
-      z-index: 2; color: rgba(255,255,255,.7);
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
-      animation: bob 2.2s ease-in-out infinite;
-    }
-    @keyframes bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,6px); } }
 
-    /* Split screen a partir de 901px: painel sólido à esquerda (sem foto
-       por trás do texto) + foto inteira, nítida, à direita. */
+    /* Painel do vídeo: aspect-ratio define a altura sozinho (sem % de
+       nada), com pôster (foto real) até a pessoa clicar em assistir. */
+    .hero-video {
+      position: relative; aspect-ratio: 4 / 5; overflow: hidden;
+      background: #14100e; cursor: pointer;
+    }
+    .hero-video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hero-video-scrim {
+      position: absolute; inset: 0;
+      background: linear-gradient(0deg, rgba(20,16,14,.45) 0%, rgba(20,16,14,0) 45%);
+      pointer-events: none;
+    }
+    .play-btn {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 76px; height: 76px; border-radius: 50%; border: none; cursor: pointer;
+      background: rgba(255,255,255,.96); color: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 14px 36px rgba(0,0,0,.4);
+      transition: transform .2s, background .2s;
+    }
+    .play-btn svg { margin-left: 3px; }
+    .hero-video:hover .play-btn { transform: translate(-50%, -50%) scale(1.06); background: var(--white); }
+    .play-label {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--white); background: rgba(20,16,14,.45); padding: 8px 16px; border-radius: 100px;
+      pointer-events: none;
+    }
+    .hero-video.is-playing { cursor: default; }
+    .hero-video.is-playing .play-label,
+    .hero-video.is-playing .play-btn,
+    .hero-video.is-playing .hero-video-scrim { display: none; }
+
+    /* Lado a lado a partir de 901px. */
     @media (min-width: 901px) {
-      /* grid-template-rows: 100% é o que faltava antes: sem isso, a linha
-         "auto" do grid crescia pro tamanho do conteúdo do vídeo (que antes
-         do metadata carregar assume 300x150px, o "risco" que aparecia no
-         topo) em vez de ocupar a altura inteira do container. */
-      .hero { display: grid; height: 100svh; grid-template-columns: minmax(440px, 46%) 1fr; grid-template-rows: 100%; align-items: stretch; }
-      .hero-media { position: relative; inset: auto; grid-column: 2; height: 100%; overflow: hidden; }
-      .hero-scrim { background: linear-gradient(90deg, #1f130f 0%, rgba(31,19,15,.35) 12%, transparent 28%); }
-      .hero-content {
-        grid-column: 1; padding: 0 56px; display: flex; align-items: center;
-        height: 100%; overflow-y: auto;
-        background: linear-gradient(160deg, #1f130f 0%, #6b2a26 100%);
-      }
-      .hero-content .container { max-width: none; padding: 0; }
-      .hero-scroll { left: auto; right: 32px; transform: none; }
-      @keyframes bob { 0%,100% { transform: translate(0,0); } 50% { transform: translate(0,6px); } }
+      .hero { display: flex; min-height: 100svh; }
+      .hero-content { flex: 1 1 46%; padding: 64px 64px; }
+      .hero-video { flex: 1 1 54%; aspect-ratio: auto; align-self: stretch; }
     }
 
     /* ===== PROMESSA ===== */
@@ -317,34 +318,35 @@
 <body>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=3725674297727276&ev=PageView&noscript=1" /></noscript>
 
-  <!-- ===== HERO EM TELA CHEIA ===== -->
+  <!-- ===== HERO: chamada + vídeo lado a lado =====
+       Estrutura simples de propósito, depois de 2 rodadas de bug com
+       overlay/grid: dois blocos NORMAIS lado a lado (flex), cada um com seu
+       próprio tamanho - nenhum dos dois depende de "% da altura do pai"
+       calculada em cima da hora, que foi a causa dos bugs anteriores. -->
   <section class="hero">
-    <div class="hero-media">
-      <video autoplay muted loop playsinline preload="metadata" aria-label="Vídeo de apresentação da Dra. Vanessa Viríssimo Maciel">
-        <source src="media/apresentacao.mp4" type="video/mp4" />
-      </video>
-      <div class="hero-scrim"></div>
-    </div>
-
     <div class="hero-content">
-      <div class="container">
-        <span class="eyebrow eyebrow-onphoto">Fios Aptos · Florianópolis</span>
-        <h1>A firmeza que sua pele<br/>já teve, <em>de volta</em> —<br/>sem cirurgia.</h1>
-        <p class="promise">Numa sessão, os Fios Aptos devolvem sustentação à sua pele. Nos meses seguintes, seu próprio colágeno continua o trabalho — até você se olhar no espelho e reconhecer aquele rosto mais firme e descansado.</p>
-        <button type="button" class="btn btn-lg" onclick="openModal()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-          Quero saber se sou candidata
-        </button>
-        <div class="hero-badges">
-          <span class="badge">Sem cirurgia, sem cortes</span>
-          <span class="badge">Resultado natural e progressivo</span>
-        </div>
+      <span class="eyebrow">Fios Aptos · Florianópolis</span>
+      <h1>A firmeza que sua pele<br/>já teve, <em>de volta</em> —<br/>sem cirurgia.</h1>
+      <p class="promise">Numa sessão, os Fios Aptos devolvem sustentação à sua pele. Nos meses seguintes, seu próprio colágeno continua o trabalho — até você se olhar no espelho e reconhecer aquele rosto mais firme e descansado.</p>
+      <button type="button" class="btn btn-lg" onclick="openModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        Quero saber se sou candidata
+      </button>
+      <div class="hero-badges">
+        <span class="badge">Sem cirurgia, sem cortes</span>
+        <span class="badge">Resultado natural e progressivo</span>
       </div>
     </div>
 
-    <div class="hero-scroll">
-      <span>Como funciona</span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    <div class="hero-video" id="heroVideoBox" onclick="playHeroVideo()">
+      <video id="heroVideo" poster="../fotos/hero.webp" preload="metadata" playsinline aria-label="Vídeo de apresentação da Dra. Vanessa Viríssimo Maciel">
+        <source src="media/apresentacao.mp4" type="video/mp4" />
+      </video>
+      <div class="hero-video-scrim"></div>
+      <button type="button" class="play-btn" id="playBtn" aria-label="Assistir vídeo de apresentação">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <span class="play-label">Assistir apresentação</span>
     </div>
   </section>
 
@@ -549,6 +551,20 @@
         body: JSON.stringify(body),
       }).catch(() => {});
     })();
+
+    // ===== Vídeo do hero: só toca quando a pessoa clica no play =====
+    function playHeroVideo() {
+      const video = document.getElementById('heroVideo');
+      const box = document.getElementById('heroVideoBox');
+      if (!video.paused) return;
+      video.controls = true;
+      video.play().then(() => {
+        box.classList.add('is-playing');
+        // Depois que o vídeo começa, quem manda é o controle nativo -
+        // tira o clique daqui pra não brigar com o botão de pausa dele.
+        box.onclick = null;
+      }).catch(() => {});
+    }
 
     // ===== Pop-up: navegação entre passos =====
     let leadName = '';
