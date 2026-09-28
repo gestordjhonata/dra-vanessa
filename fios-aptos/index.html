@@ -155,11 +155,16 @@
     /* Split screen a partir de 901px: painel sólido à esquerda (sem foto
        por trás do texto) + foto inteira, nítida, à direita. */
     @media (min-width: 901px) {
-      .hero { display: grid; height: 100svh; grid-template-columns: minmax(440px, 46%) 1fr; align-items: stretch; }
+      /* grid-template-rows: 100% é o que faltava antes: sem isso, a linha
+         "auto" do grid crescia pro tamanho do conteúdo do vídeo (que antes
+         do metadata carregar assume 300x150px, o "risco" que aparecia no
+         topo) em vez de ocupar a altura inteira do container. */
+      .hero { display: grid; height: 100svh; grid-template-columns: minmax(440px, 46%) 1fr; grid-template-rows: 100%; align-items: stretch; }
       .hero-media { position: relative; inset: auto; grid-column: 2; height: 100%; overflow: hidden; }
       .hero-scrim { background: linear-gradient(90deg, #1f130f 0%, rgba(31,19,15,.35) 12%, transparent 28%); }
       .hero-content {
         grid-column: 1; padding: 0 56px; display: flex; align-items: center;
+        height: 100%; overflow-y: auto;
         background: linear-gradient(160deg, #1f130f 0%, #6b2a26 100%);
       }
       .hero-content .container { max-width: none; padding: 0; }
