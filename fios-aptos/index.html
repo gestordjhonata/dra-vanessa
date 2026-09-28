@@ -8,8 +8,8 @@
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="../fotos/hero.webp" media="(max-width: 900px)" fetchpriority="high" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="../fotos/bio.webp" media="(max-width: 900px)" fetchpriority="high" />
   <link rel="preload" as="image" href="../fotos/hero-wide.webp" media="(min-width: 901px)" fetchpriority="high" />
 
   <!-- Meta Pixel -->
@@ -36,27 +36,29 @@
   <style>
     /*
       Página de transição (não é o site principal). Mesmos design tokens do
-      ../index.html pra manter a identidade, conteúdo focado só em Fios
-      Aptos. Diferença chave: o botão de WhatsApp não é um link direto -
-      abre um pop-up de 3 passos (nome/whats, pergunta de qualificação,
-      confirmação) e só no passo final monta o link e dispara os pixels.
-      Isso é intencional: reduz volume, sobe qualidade do lead.
+      ../index.html (paleta terracota/taupe, Fraunces+Inter) pra manter a
+      identidade, mas composição totalmente diferente: hero em tela cheia
+      com a foto da Vanessa de fundo, headline grande sobre a imagem,
+      promessa curta, benefícios e um único CTA que abre o pop-up de 2
+      passos (nome/whats -> pergunta de qualificação -> WhatsApp).
     */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --terra:      #B5654A;
       --terra-dark: #8F4E38;
+      --terra-light:#E8A583;
       --taupe:      #D9C6B4;
       --taupe-soft: #F4ECE3;
       --bg:         #FFFCFA;
       --white:      #ffffff;
       --charcoal:   #2B211B;
+      --ink:        #1A1310;
       --mid:        #7C6A5C;
       --ff-display: 'Fraunces', Georgia, serif;
       --ff-body:    'Inter', system-ui, sans-serif;
       --max:        1100px;
-      --radius:     16px;
+      --radius:     18px;
     }
 
     html { scroll-behavior: smooth; }
@@ -74,152 +76,136 @@
     .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
     .eyebrow {
-      font-family: var(--ff-body);
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      color: var(--terra);
-      margin-bottom: 16px;
-      display: block;
+      font-family: var(--ff-body); font-size: 11px; font-weight: 700;
+      letter-spacing: .2em; text-transform: uppercase; color: var(--terra);
+      margin-bottom: 16px; display: block;
     }
+    .eyebrow-onphoto { color: var(--terra-light); }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: var(--terra);
-      color: var(--white);
-      font-family: var(--ff-body);
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: .03em;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      padding: 16px 34px;
-      border-radius: 100px;
-      box-shadow: 0 10px 30px rgba(181,101,74,.28);
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--terra); color: var(--white);
+      font-family: var(--ff-body); font-size: 14.5px; font-weight: 700;
+      letter-spacing: .03em; text-decoration: none; border: none; cursor: pointer;
+      padding: 17px 36px; border-radius: 100px;
+      box-shadow: 0 14px 34px rgba(0,0,0,.28);
       transition: background .2s, transform .15s, box-shadow .2s;
     }
-    .btn:hover {
-      background: var(--terra-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 12px 34px rgba(143,78,56,.35);
-    }
+    .btn:hover { background: var(--terra-dark); transform: translateY(-1px); box-shadow: 0 16px 38px rgba(0,0,0,.32); }
     .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
-    .btn-lg { font-size: 15px; padding: 18px 42px; }
+    .btn-lg { font-size: 15.5px; padding: 19px 44px; }
     .btn-block { width: 100%; }
-    .btn-ghost {
-      background: transparent; color: var(--mid);
-      box-shadow: none; padding: 12px 20px; font-weight: 500;
-    }
+    .btn-ghost { background: transparent; color: var(--mid); box-shadow: none; padding: 12px 20px; font-weight: 500; }
     .btn-ghost:hover { background: var(--taupe-soft); color: var(--charcoal); }
-
-    .divider { width: 48px; height: 2px; background: var(--terra); border-radius: 2px; margin: 24px 0; }
 
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* TOPBAR */
-    .topbar { padding: 18px 24px; border-bottom: 1px solid var(--taupe); background: var(--white); }
-    .topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    .topbar-name { font-family: var(--ff-display); font-size: 19px; font-weight: 600; color: var(--charcoal); line-height: 1.2; }
-    .topbar-name span { display: block; font-family: var(--ff-body); font-size: 10.5px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); margin-top: 2px; }
-
-    /* HERO */
-    .hero { padding: 56px 24px 72px; overflow: hidden; }
-    .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    /* ===== HERO EM TELA CHEIA ===== */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+      color: var(--white);
+    }
+    .hero-media { position: absolute; inset: 0; z-index: 0; }
+    .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
+    .hero-scrim {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(0deg, rgba(15,10,8,.88) 0%, rgba(15,10,8,.55) 42%, rgba(15,10,8,.15) 68%, rgba(15,10,8,.25) 100%),
+        linear-gradient(100deg, rgba(15,10,8,.55) 0%, rgba(15,10,8,.1) 55%);
+    }
+    .hero-top {
+      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
+      padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .hero-top-name { font-family: var(--ff-display); font-size: 15px; font-weight: 600; letter-spacing: .02em; }
+    .hero-top-name span { display: block; font-family: var(--ff-body); font-size: 9.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .75; margin-top: 2px; }
+    .hero-content { position: relative; z-index: 2; padding: 0 24px 64px; width: 100%; }
+    .hero-content .container { max-width: var(--max); }
     .hero-content h1 {
       font-family: var(--ff-display);
-      font-size: clamp(34px, 4.4vw, 54px);
-      font-weight: 400; line-height: 1.2;
-      color: var(--charcoal); margin-bottom: 20px;
+      font-size: clamp(40px, 7.5vw, 78px);
+      font-weight: 500; line-height: 1.02; letter-spacing: -.01em;
+      margin-bottom: 22px; max-width: 900px;
+      text-wrap: balance;
     }
-    .hero-content h1 em { font-style: italic; color: var(--terra); }
-    .hero-content p { font-size: 17px; color: var(--mid); max-width: 460px; margin-bottom: 32px; line-height: 1.75; }
-    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
-    .badge { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--terra-dark); background: var(--taupe-soft); padding: 7px 14px; border-radius: 100px; }
-    .hero-visual { position: relative; }
-    .hero-visual picture { display: block; }
-    .hero-visual::before {
-      content: ''; position: absolute; top: -10%; right: -16%; width: 90%; height: 90%;
-      background: var(--taupe); border-radius: 40% 60% 55% 45% / 50% 45% 55% 50%; z-index: 0;
+    .hero-content h1 em { font-style: italic; color: var(--terra-light); font-weight: 400; }
+    .hero-content .promise {
+      font-size: clamp(16px, 1.7vw, 19px); font-weight: 500;
+      max-width: 520px; margin-bottom: 34px; opacity: .92; line-height: 1.65;
     }
-    .hero-visual img {
-      position: relative; z-index: 1; width: 100%; aspect-ratio: 4/5;
-      object-fit: cover; border-radius: var(--radius); box-shadow: 0 24px 60px rgba(181,101,74,.18);
+    .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+    .badge {
+      font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+      color: var(--ink); background: rgba(255,255,255,.92);
+      padding: 8px 15px; border-radius: 100px;
     }
-    .hero-strip {
-      position: relative; z-index: 2; margin: -34px 0 0 28px; background: var(--white);
-      padding: 18px 26px; border-radius: 12px; box-shadow: 0 8px 30px rgba(43,33,27,.1);
-      display: inline-flex; flex-direction: column; max-width: 260px;
+    .hero-scroll {
+      position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%);
+      z-index: 2; color: rgba(255,255,255,.7);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+      animation: bob 2.2s ease-in-out infinite;
     }
-    .hero-strip p { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--mid); margin-bottom: 4px; }
-    .hero-strip strong { font-family: var(--ff-display); font-size: 17px; font-weight: 600; color: var(--charcoal); }
+    @keyframes bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,6px); } }
 
     @media (min-width: 901px) {
-      .hero { padding-left: 0; padding-right: 0; }
-      .hero .container {
-        max-width: none; margin: 0;
-        padding: 0 0 0 max(48px, calc((100vw - 1100px) / 2 + 24px));
-        grid-template-columns: minmax(0, 460px) minmax(0, 1fr); gap: 56px;
-      }
-      .hero-visual { width: 100%; max-width: 980px; justify-self: end; }
-      .hero-visual::before { right: auto; left: -7%; }
-      .hero-visual img { aspect-ratio: 1.4 / 1; border-radius: var(--radius) 0 0 var(--radius); }
+      .hero-content { padding-bottom: 96px; }
     }
 
-    /* HOW IT WORKS */
-    .how { padding: 80px 24px; background: var(--taupe-soft); }
-    .how-header { text-align: center; max-width: 640px; margin: 0 auto 48px; }
-    .how-header h2 { font-family: var(--ff-display); font-size: clamp(28px, 3.2vw, 42px); font-weight: 400; color: var(--charcoal); line-height: 1.2; margin-bottom: 14px; }
-    .how-header h2 em { font-style: italic; color: var(--terra); }
-    .how-header p { color: var(--mid); font-size: 15px; }
-    .how-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    .how-item { background: var(--white); border-radius: var(--radius); padding: 32px 28px; }
-    .how-icn { width: 44px; height: 44px; border-radius: 50%; background: var(--taupe-soft); color: var(--terra); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
-    .how-item h3 { font-family: var(--ff-display); font-size: 19px; font-weight: 600; color: var(--charcoal); margin-bottom: 10px; }
-    .how-item p { font-size: 14px; color: var(--mid); line-height: 1.75; }
-    .how-note { text-align: center; margin-top: 32px; font-size: 13px; color: var(--mid); }
+    /* ===== PROMESSA ===== */
+    .promise-band { padding: 76px 24px; text-align: center; background: var(--white); }
+    .promise-band .container { max-width: 780px; }
+    .promise-band p {
+      font-family: var(--ff-display); font-style: italic;
+      font-size: clamp(22px, 2.8vw, 33px); line-height: 1.5; color: var(--charcoal);
+    }
+    .promise-band p em { font-style: italic; color: var(--terra); }
+    .promise-stats { display: flex; justify-content: center; gap: 48px; margin-top: 44px; flex-wrap: wrap; }
+    .promise-stat strong { display: block; font-family: var(--ff-display); font-size: 30px; color: var(--terra); }
+    .promise-stat span { font-size: 12px; color: var(--mid); text-transform: uppercase; letter-spacing: .06em; }
 
-    /* WHO FOR */
-    .who { padding: 80px 24px; background: var(--white); }
-    .who .container { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: center; }
-    .who-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/5; }
-    .who-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .who h2 { font-family: var(--ff-display); font-size: clamp(28px, 3.2vw, 42px); font-weight: 400; color: var(--charcoal); line-height: 1.2; margin-bottom: 12px; }
-    .who h2 em { font-style: italic; color: var(--terra); }
-    .who-sub { color: var(--mid); font-size: 15px; margin-bottom: 28px; max-width: 460px; }
-    .who-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-    .who-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 15.5px; color: var(--charcoal); }
-    .who-list .check-icn { flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--taupe-soft); color: var(--terra); display: flex; align-items: center; justify-content: center; margin-top: 1px; }
-    .who-fine { margin-top: 24px; font-size: 12.5px; color: var(--mid); opacity: .85; }
+    /* ===== O QUE AJUDA (benefícios) ===== */
+    .benefits { padding: 20px 24px 90px; background: var(--white); }
+    .benefits-header { text-align: center; max-width: 620px; margin: 0 auto 48px; }
+    .benefits-header h2 {
+      font-family: var(--ff-display); font-size: clamp(28px, 3.4vw, 44px);
+      font-weight: 400; color: var(--charcoal); line-height: 1.2;
+    }
+    .benefits-header h2 em { font-style: italic; color: var(--terra); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .benefit-card {
+      background: var(--taupe-soft); border-radius: var(--radius);
+      padding: 30px 24px; transition: transform .2s, box-shadow .2s;
+    }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(181,101,74,.14); }
+    .benefit-icn {
+      width: 46px; height: 46px; border-radius: 50%; background: var(--white); color: var(--terra);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+    }
+    .benefit-card h3 { font-family: var(--ff-display); font-size: 17.5px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; }
+    .benefit-card p { font-size: 13.5px; color: var(--mid); line-height: 1.65; }
 
-    /* BIO */
-    .bio { padding: 80px 24px; background: var(--taupe-soft); }
-    .bio .container { display: grid; grid-template-columns: 340px 1fr; gap: 56px; align-items: center; }
-    .bio-img { border-radius: var(--radius); overflow: hidden; aspect-ratio: 3/4; }
-    .bio-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .bio-content h2 { font-family: var(--ff-display); font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.2; color: var(--charcoal); margin-bottom: 8px; }
-    .bio-content h2 em { font-style: italic; color: var(--terra); }
-    .credentials { list-style: none; display: flex; flex-direction: column; gap: 12px; margin: 22px 0 26px; }
-    .credentials li { display: flex; gap: 12px; align-items: flex-start; font-size: 14.5px; color: var(--charcoal); }
-    .credentials li .dot { flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--terra); margin-top: 8px; }
+    /* ===== CREDENCIAL / TRUST STRIP ===== */
+    .trust { padding: 0 24px 90px; background: var(--white); }
+    .trust .container {
+      background: var(--taupe-soft); border-radius: var(--radius);
+      display: grid; grid-template-columns: 200px 1fr; align-items: center; gap: 36px;
+      padding: 28px;
+    }
+    .trust-img { border-radius: 12px; overflow: hidden; aspect-ratio: 1/1; }
+    .trust-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+    .trust-text p { font-size: 14px; color: var(--mid); line-height: 1.7; }
+    .trust-text strong { color: var(--charcoal); font-family: var(--ff-display); font-size: 17px; font-weight: 600; display: block; margin-bottom: 6px; }
 
-    /* LOCATION */
-    .location { padding: 80px 24px; background: var(--white); text-align: center; }
-    .location .container { max-width: 620px; }
-    .location h2 { font-family: var(--ff-display); font-size: clamp(26px, 3vw, 38px); font-weight: 400; color: var(--charcoal); margin-bottom: 16px; }
-    .location h2 em { font-style: italic; color: var(--terra); }
-    .location p { color: var(--mid); font-size: 15px; }
-
-    /* FINAL CTA */
+    /* ===== CTA FINAL ===== */
     .cta-final { background: var(--taupe); padding: 90px 24px; text-align: center; }
-    .cta-final h2 { font-family: var(--ff-display); font-size: clamp(28px, 3.6vw, 46px); font-weight: 400; color: var(--charcoal); line-height: 1.25; margin-bottom: 16px; }
+    .cta-final h2 { font-family: var(--ff-display); font-size: clamp(28px, 3.8vw, 48px); font-weight: 400; color: var(--charcoal); line-height: 1.22; margin-bottom: 16px; }
     .cta-final h2 em { font-style: italic; color: var(--terra-dark); }
-    .cta-final p { font-size: 16px; color: var(--charcoal); margin-bottom: 36px; max-width: 460px; margin-left: auto; margin-right: auto; opacity: .8; }
+    .cta-final p { font-size: 16px; color: var(--charcoal); margin-bottom: 36px; max-width: 440px; margin-left: auto; margin-right: auto; opacity: .8; }
     .cta-privacy { margin-top: 20px; font-size: 12px; color: var(--charcoal); opacity: .65; }
 
     footer { background: var(--white); padding: 40px 24px; border-top: 1px solid var(--taupe); text-align: center; }
@@ -229,45 +215,40 @@
     .sticky-cta {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 150;
       background: var(--white); border-top: 1px solid var(--taupe);
-      padding: 12px 16px; display: none;
-      box-shadow: 0 -8px 24px rgba(43,33,27,.08);
+      padding: 12px 16px; display: none; box-shadow: 0 -8px 24px rgba(43,33,27,.08);
     }
     .sticky-cta .btn { width: 100%; }
     @media (max-width: 720px) { .sticky-cta { display: block; } }
 
     /* ===== POP-UP (3 passos) ===== */
     .overlay {
-      position: fixed; inset: 0; z-index: 300;
-      background: rgba(43,33,27,.5);
-      display: none; align-items: center; justify-content: center;
-      padding: 20px;
+      position: fixed; inset: 0; z-index: 300; background: rgba(26,19,16,.6);
+      display: none; align-items: center; justify-content: center; padding: 20px;
     }
     .overlay.is-open { display: flex; }
     .modal {
       background: var(--white); border-radius: var(--radius);
       max-width: 440px; width: 100%; padding: 34px 30px;
-      position: relative; box-shadow: 0 30px 80px rgba(43,33,27,.25);
+      position: relative; box-shadow: 0 30px 80px rgba(0,0,0,.35);
       max-height: 90vh; overflow-y: auto;
     }
     .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      width: 32px; height: 32px; border-radius: 50%;
-      background: var(--taupe-soft); border: none; cursor: pointer;
-      color: var(--mid); display: flex; align-items: center; justify-content: center;
+      position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 50%;
+      background: var(--taupe-soft); border: none; cursor: pointer; color: var(--mid);
+      display: flex; align-items: center; justify-content: center;
     }
     .modal-close:hover { background: var(--taupe); color: var(--charcoal); }
     .modal-steps { display: flex; gap: 6px; margin-bottom: 22px; }
     .modal-steps span { flex: 1; height: 3px; border-radius: 3px; background: var(--taupe-soft); }
     .modal-steps span.done { background: var(--terra); }
-    .modal-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--terra); margin-bottom: 8px; }
+    .modal-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--terra); margin-bottom: 8px; }
     .modal h3 { font-family: var(--ff-display); font-size: 23px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; line-height: 1.3; }
     .modal-sub { font-size: 14px; color: var(--mid); margin-bottom: 24px; line-height: 1.6; }
     .field { margin-bottom: 16px; }
     .field label { display: block; font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 7px; }
     .field input {
-      width: 100%; border: 1.5px solid var(--taupe); border-radius: 10px;
-      padding: 13px 16px; font-size: 15px; font-family: var(--ff-body);
-      background: var(--bg); color: var(--charcoal);
+      width: 100%; border: 1.5px solid var(--taupe); border-radius: 10px; padding: 13px 16px;
+      font-size: 15px; font-family: var(--ff-body); background: var(--bg); color: var(--charcoal);
     }
     .field input:focus { outline: none; border-color: var(--terra); }
     .field-error { font-size: 12.5px; color: var(--terra-dark); margin-top: 6px; display: none; }
@@ -276,11 +257,9 @@
 
     .options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
     .option {
-      display: flex; align-items: center; gap: 12px;
-      border: 1.5px solid var(--taupe); border-radius: 12px;
-      padding: 14px 16px; cursor: pointer; font-size: 14.5px;
-      color: var(--charcoal); transition: border-color .15s, background .15s;
-      background: var(--bg);
+      display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--taupe); border-radius: 12px;
+      padding: 14px 16px; cursor: pointer; font-size: 14.5px; color: var(--charcoal);
+      transition: border-color .15s, background .15s; background: var(--bg);
     }
     .option:hover { border-color: var(--terra); }
     .option input { accent-color: var(--terra); width: 17px; height: 17px; flex-shrink: 0; }
@@ -291,10 +270,8 @@
 
     .modal-success { text-align: center; padding: 8px 0 4px; }
     .modal-success .success-icn {
-      width: 60px; height: 60px; border-radius: 50%;
-      background: var(--taupe-soft); color: var(--terra);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
+      width: 60px; height: 60px; border-radius: 50%; background: var(--taupe-soft); color: var(--terra);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
     }
     .modal-success h3 { margin-bottom: 10px; }
     .modal-success p { font-size: 14.5px; color: var(--mid); margin-bottom: 26px; line-height: 1.7; }
@@ -303,45 +280,49 @@
 
     /* RESPONSIVE */
     @media (max-width: 900px) {
-      .hero .container, .who .container, .bio .container { grid-template-columns: 1fr; }
-      .hero-content { order: 2; }
-      .hero-visual { order: 1; max-width: 420px; margin: 0 auto; }
-      .who-img { order: 1; max-width: 420px; margin: 0 auto; }
-      .bio-img { max-width: 320px; margin: 0 auto; }
-      .how-grid { grid-template-columns: 1fr; }
+      .benefits-grid { grid-template-columns: repeat(2, 1fr); }
+      .trust .container { grid-template-columns: 1fr; text-align: center; }
+      .trust-img { max-width: 140px; margin: 0 auto; }
     }
     @media (max-width: 600px) {
       body { font-size: 17px; }
-      .hero-content h1 { font-size: 33px; }
-      .hero-content p { font-size: 17px; }
-      .how-header h2, .who h2, .bio-content h2, .location h2, .cta-final h2 { font-size: 28px; }
-      .hero-strip { margin-left: 0; }
+      .hero-content h1 { font-size: 36px; }
+      .benefits-header h2, .cta-final h2 { font-size: 28px; }
+      .benefits-grid { grid-template-columns: 1fr; }
       .modal { padding: 28px 22px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { transition: none !important; animation: none !important; }
       .reveal { opacity: 1; transform: none; }
+      .hero-scroll { animation: none; }
     }
   </style>
 </head>
 <body>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=3725674297727276&ev=PageView&noscript=1" /></noscript>
 
-  <div class="topbar">
-    <div class="container">
-      <div class="topbar-name">
+  <!-- ===== HERO EM TELA CHEIA ===== -->
+  <section class="hero">
+    <div class="hero-media">
+      <picture>
+        <source media="(min-width: 901px)" srcset="../fotos/hero-wide.webp" />
+        <img src="../fotos/bio.webp" alt="Dra. Vanessa Viríssimo Maciel, dermatologista em Florianópolis" fetchpriority="high" decoding="async" />
+      </picture>
+      <div class="hero-scrim"></div>
+    </div>
+
+    <div class="hero-top">
+      <div class="hero-top-name">
         Dra. Vanessa Viríssimo Maciel
         <span>Dermatologista · Florianópolis</span>
       </div>
     </div>
-  </div>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <span class="eyebrow">Fios Aptos · Florianópolis</span>
-        <h1>Flacidez no rosto ou<br/>papada, sem <em>cirurgia</em></h1>
-        <p>Os Fios Aptos reposicionam a pele na hora e estimulam a produção natural de colágeno nos meses seguintes — um lifting progressivo, feito em consultório, com a Dra. Vanessa Viríssimo Maciel.</p>
+    <div class="hero-content">
+      <div class="container">
+        <span class="eyebrow eyebrow-onphoto">Fios Aptos · Lifting sem cirurgia</span>
+        <h1>Flacidez no rosto<br/>ou papada?<br/><em>Isso tem solução.</em></h1>
+        <p class="promise">Os Fios Aptos reposicionam a pele na hora e estimulam a produção natural de colágeno nos meses seguintes — resultado progressivo, feito em consultório, sem cortes.</p>
         <button type="button" class="btn btn-lg" onclick="openModal()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           Quero saber se sou candidata
@@ -349,93 +330,72 @@
         <div class="hero-badges">
           <span class="badge">Certificação em Fios Aptos</span>
           <span class="badge">Efeito até 24 meses</span>
-          <span class="badge">Sem cortes</span>
-        </div>
-      </div>
-
-      <div class="hero-visual">
-        <picture>
-          <source media="(min-width: 901px)" srcset="../fotos/hero-wide.webp" />
-          <img src="../fotos/hero.webp" alt="Dra. Vanessa Viríssimo Maciel, dermatologista em Florianópolis" fetchpriority="high" decoding="async" />
-        </picture>
-        <div class="hero-strip">
-          <p>Registro profissional</p>
-          <strong>CRM 23863 · RQE 23318</strong>
         </div>
       </div>
     </div>
-  </section>
 
-  <section class="how">
-    <div class="container">
-      <div class="how-header reveal">
-        <span class="eyebrow">Como funciona</span>
-        <h2>Um efeito <em>imediato</em>,<br/>e um resultado que <em>continua melhorando</em></h2>
-        <p>Os Fios Aptos são biocompatíveis e totalmente absorvidos pelo organismo ao longo do tempo.</p>
-      </div>
-      <div class="how-grid">
-        <div class="how-item reveal">
-          <div class="how-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div>
-          <h3>Efeito imediato</h3>
-          <p>Os fios reposicionam a pele e a gordura da região que perderam sustentação com o tempo — o resultado do lifting já aparece na primeira avaliação.</p>
-        </div>
-        <div class="how-item reveal">
-          <div class="how-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
-          <h3>Resultado progressivo</h3>
-          <p>Nos meses seguintes, os fios estimulam a produção natural de colágeno e elastina, o que dá firmeza à pele de forma gradual — o resultado costuma durar de 1 a 2 anos.</p>
-        </div>
-      </div>
-      <p class="how-note reveal">Procedimento minimamente invasivo, feito em consultório com anestesia local — sem cortes e com recuperação mais rápida que a cirurgia plástica.</p>
+    <div class="hero-scroll">
+      <span>Como funciona</span>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
     </div>
   </section>
 
-  <section class="who">
-    <div class="container">
-      <div class="who-img reveal">
-        <img src="../fotos/checklist.webp" alt="Dra. Vanessa Viríssimo Maciel realizando avaliação dermatológica" loading="lazy" decoding="async" />
-      </div>
-      <div class="reveal">
-        <span class="eyebrow">Pra quem é indicado</span>
-        <h2>Feito sob medida pra<br/>quem tem <em>flacidez leve a moderada</em></h2>
-        <p class="who-sub">A indicação certa é o que garante um resultado natural. Por isso a avaliação individual vem sempre antes de qualquer procedimento.</p>
-        <ul class="who-list">
-          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Flacidez nas bochechas e linha da mandíbula</li>
-          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Papada e flacidez no pescoço</li>
-          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Sobrancelha caída, com efeito lifting sutil</li>
-          <li><span class="check-icn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Quem busca uma alternativa não cirúrgica</li>
-        </ul>
-        <p class="who-fine">Cada caso é diferente — a Dra. Vanessa avalia se os Fios Aptos são a melhor indicação pra você ou se outra abordagem se encaixa melhor.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="bio">
-    <div class="container">
-      <div class="bio-img reveal">
-        <img src="../fotos/bio.webp" alt="Dra. Vanessa Viríssimo Maciel" loading="lazy" decoding="async" />
-      </div>
-      <div class="bio-content reveal">
-        <span class="eyebrow">A especialista</span>
-        <h2>Dra. Vanessa<br/><em>Viríssimo Maciel</em></h2>
-        <div class="divider"></div>
-        <ul class="credentials">
-          <li><span class="dot"></span>CRM/SC 23863 · RQE 23318 — Florianópolis, SC · Especialista pela SBD</li>
-          <li><span class="dot"></span>Formada em Medicina pela Universidade Federal de Santa Catarina</li>
-          <li><span class="dot"></span>Membro Titular da Sociedade Brasileira de Dermatologia (SBD)</li>
-          <li><span class="dot"></span>Especialização e Certificação em Fios Aptos</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="location">
+  <!-- ===== PROMESSA ===== -->
+  <section class="promise-band">
     <div class="container reveal">
-      <span class="eyebrow">Onde fica</span>
-      <h2>Atendimento em<br/><em>Florianópolis, SC</em></h2>
-      <p>Rod. José Carlos Daux — Saco Grande, Florianópolis - SC, 88032-005</p>
+      <p>Efeito mecânico <em>imediato</em>, reposicionando a pele que perdeu sustentação — e um efeito biológico <em>progressivo</em>, que estimula colágeno e elastina ao longo dos meses.</p>
+      <div class="promise-stats">
+        <div class="promise-stat"><strong>0 cortes</strong><span>procedimento em consultório</span></div>
+        <div class="promise-stat"><strong>1-2 anos</strong><span>duração do resultado</span></div>
+        <div class="promise-stat"><strong>Anestesia local</strong><span>recuperação rápida</span></div>
+      </div>
     </div>
   </section>
 
+  <!-- ===== O QUE AJUDA ===== -->
+  <section class="benefits">
+    <div class="container">
+      <div class="benefits-header reveal">
+        <span class="eyebrow">Pra quem é indicado</span>
+        <h2>O que os Fios Aptos<br/><em>ajudam a resolver</em></h2>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit-card reveal">
+          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78l1.06 1.06L12 21l7.78-7.55 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+          <h3>Bochechas e mandíbula</h3>
+          <p>Flacidez que muda o contorno do rosto e pede sustentação.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
+          <h3>Papada e pescoço</h3>
+          <p>Firmeza na região que mais aparece nas fotos e no espelho.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Sobrancelha caída</h3>
+          <p>Efeito lifting sutil que reabre o olhar sem exagero.</p>
+        </div>
+        <div class="benefit-card reveal">
+          <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-8-6-8-11a4 4 0 014-4 4.4 4.4 0 014 2.5A4.4 4.4 0 0116 6a4 4 0 014 4c0 5-4 8-8 11z"/></svg></div>
+          <h3>Quem evita cirurgia</h3>
+          <p>Uma alternativa não cirúrgica pra quem quer resultado sem cortes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST STRIP ===== -->
+  <section class="trust">
+    <div class="container reveal">
+      <div class="trust-img"><img src="../fotos/hero.webp" alt="Dra. Vanessa Viríssimo Maciel" loading="lazy" decoding="async" /></div>
+      <div class="trust-text">
+        <strong>Dra. Vanessa Viríssimo Maciel</strong>
+        <p>CRM/SC 23863 · RQE 23318 · Especialista pela SBD · Especialização e Certificação em Fios Aptos · Florianópolis, SC</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
   <section class="cta-final">
     <div class="container reveal">
       <span class="eyebrow">Dê o primeiro passo</span>
@@ -447,7 +407,7 @@
   </section>
 
   <footer>
-    <p>As informações desta página têm caráter informativo e não substituem a consulta médica.<br/>CRM 23863 · RQE 23318 — Dra. Vanessa Viríssimo Maciel</p>
+    <p>As informações desta página têm caráter informativo e não substituem a consulta médica.<br/>CRM 23863 · RQE 23318 — Dra. Vanessa Viríssimo Maciel — Florianópolis, SC</p>
   </footer>
 
   <div class="sticky-cta">
@@ -509,7 +469,7 @@
           <div class="success-icn"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
           <h3>Recebemos o que você precisa</h3>
           <p>Veja nossos horários disponíveis no WhatsApp e converse direto com a equipe da Dra. Vanessa.</p>
-          <button type="button" class="btn btn-block" id="btn-whatsapp" onclick="goToWhatsapp()">
+          <button type="button" class="btn btn-block" id="btn-whatsapp">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.556 4.116 1.523 5.847L.057 23.882l6.196-1.443A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.816 9.816 0 01-5.015-1.374l-.36-.214-3.727.978.995-3.638-.235-.374A9.818 9.818 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
             Abrir WhatsApp
           </button>
@@ -629,6 +589,7 @@
       document.getElementById('step-2').style.display = 'block';
       setSteps(2);
     }
+
     document.querySelectorAll('input[name="need"]').forEach(radio => {
       radio.addEventListener('change', () => {
         document.querySelectorAll('.option').forEach(opt => opt.classList.remove('is-checked'));
