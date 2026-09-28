@@ -101,13 +101,18 @@
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-    /* ===== HERO EM TELA CHEIA ===== */
+    /* ===== HERO EM TELA CHEIA =====
+       Mobile: foto de fundo com degradê, texto ancorado embaixo (a foto
+       vertical deixa espaço embaixo do rosto). Desktop: split screen -
+       painel de texto sólido à esquerda, foto inteira e sem overlay à
+       direita, pra nunca cobrir o rosto da Vanessa. */
     .hero {
       position: relative;
       min-height: 100svh;
       display: flex; align-items: flex-end;
       overflow: hidden;
       color: var(--white);
+      background: var(--ink);
     }
     .hero-media { position: absolute; inset: 0; z-index: 0; }
     .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; display: block; }
@@ -117,25 +122,19 @@
         linear-gradient(0deg, rgba(15,10,8,.88) 0%, rgba(15,10,8,.55) 42%, rgba(15,10,8,.15) 68%, rgba(15,10,8,.25) 100%),
         linear-gradient(100deg, rgba(15,10,8,.55) 0%, rgba(15,10,8,.1) 55%);
     }
-    .hero-top {
-      position: absolute; top: 0; left: 0; right: 0; z-index: 2;
-      padding: 22px 24px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .hero-top-name { font-family: var(--ff-display); font-size: 15px; font-weight: 600; letter-spacing: .02em; }
-    .hero-top-name span { display: block; font-family: var(--ff-body); font-size: 9.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; opacity: .75; margin-top: 2px; }
     .hero-content { position: relative; z-index: 2; padding: 0 24px 64px; width: 100%; }
     .hero-content .container { max-width: var(--max); }
     .hero-content h1 {
       font-family: var(--ff-display);
-      font-size: clamp(40px, 7.5vw, 78px);
-      font-weight: 500; line-height: 1.02; letter-spacing: -.01em;
-      margin-bottom: 22px; max-width: 900px;
+      font-size: clamp(40px, 7.5vw, 62px);
+      font-weight: 500; line-height: 1.06; letter-spacing: -.01em;
+      margin-bottom: 22px; max-width: 640px;
       text-wrap: balance;
     }
     .hero-content h1 em { font-style: italic; color: var(--terra-light); font-weight: 400; }
     .hero-content .promise {
-      font-size: clamp(16px, 1.7vw, 19px); font-weight: 500;
-      max-width: 520px; margin-bottom: 34px; opacity: .92; line-height: 1.65;
+      font-size: clamp(16px, 1.7vw, 18px); font-weight: 500;
+      max-width: 480px; margin-bottom: 34px; opacity: .92; line-height: 1.7;
     }
     .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
     .badge {
@@ -152,8 +151,19 @@
     }
     @keyframes bob { 0%,100% { transform: translate(-50%,0); } 50% { transform: translate(-50%,6px); } }
 
+    /* Split screen a partir de 901px: painel sólido à esquerda (sem foto
+       por trás do texto) + foto inteira, nítida, à direita. */
     @media (min-width: 901px) {
-      .hero-content { padding-bottom: 96px; }
+      .hero { display: grid; grid-template-columns: minmax(440px, 46%) 1fr; align-items: stretch; }
+      .hero-media { position: relative; inset: auto; grid-column: 2; }
+      .hero-scrim { background: linear-gradient(90deg, var(--ink) 0%, rgba(26,19,16,.35) 14%, transparent 32%); }
+      .hero-content {
+        grid-column: 1; padding: 0 56px; display: flex; align-items: center;
+        background: linear-gradient(160deg, var(--ink) 0%, #2a1e18 100%);
+      }
+      .hero-content .container { max-width: none; padding: 0; }
+      .hero-scroll { left: auto; right: 32px; transform: none; }
+      @keyframes bob { 0%,100% { transform: translate(0,0); } 50% { transform: translate(0,6px); } }
     }
 
     /* ===== PROMESSA ===== */
@@ -311,25 +321,18 @@
       <div class="hero-scrim"></div>
     </div>
 
-    <div class="hero-top">
-      <div class="hero-top-name">
-        Dra. Vanessa Viríssimo Maciel
-        <span>Dermatologista · Florianópolis</span>
-      </div>
-    </div>
-
     <div class="hero-content">
       <div class="container">
-        <span class="eyebrow eyebrow-onphoto">Fios Aptos · Lifting sem cirurgia</span>
-        <h1>Flacidez no rosto<br/>ou papada?<br/><em>Isso tem solução.</em></h1>
-        <p class="promise">Os Fios Aptos reposicionam a pele na hora e estimulam a produção natural de colágeno nos meses seguintes — resultado progressivo, feito em consultório, sem cortes.</p>
+        <span class="eyebrow eyebrow-onphoto">Fios Aptos · Florianópolis</span>
+        <h1>A firmeza que sua pele<br/>já teve, <em>de volta</em> —<br/>sem cirurgia.</h1>
+        <p class="promise">Numa sessão, os Fios Aptos devolvem sustentação à sua pele. Nos meses seguintes, seu próprio colágeno continua o trabalho — até você se olhar no espelho e reconhecer aquele rosto mais firme e descansado.</p>
         <button type="button" class="btn btn-lg" onclick="openModal()">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           Quero saber se sou candidata
         </button>
         <div class="hero-badges">
-          <span class="badge">Certificação em Fios Aptos</span>
-          <span class="badge">Efeito até 24 meses</span>
+          <span class="badge">Sem cirurgia, sem cortes</span>
+          <span class="badge">Resultado natural e progressivo</span>
         </div>
       </div>
     </div>
@@ -343,11 +346,11 @@
   <!-- ===== PROMESSA ===== -->
   <section class="promise-band">
     <div class="container reveal">
-      <p>Efeito mecânico <em>imediato</em>, reposicionando a pele que perdeu sustentação — e um efeito biológico <em>progressivo</em>, que estimula colágeno e elastina ao longo dos meses.</p>
+      <p>Isso não é sobre esticar a pele. É sobre <em>devolver o que ela perdeu</em> — sustentação na hora, e um colágeno que volta a trabalhar por você, mês após mês.</p>
       <div class="promise-stats">
-        <div class="promise-stat"><strong>0 cortes</strong><span>procedimento em consultório</span></div>
-        <div class="promise-stat"><strong>1-2 anos</strong><span>duração do resultado</span></div>
-        <div class="promise-stat"><strong>Anestesia local</strong><span>recuperação rápida</span></div>
+        <div class="promise-stat"><strong>Sem cortes</strong><span>procedimento em consultório</span></div>
+        <div class="promise-stat"><strong>Até 24 meses</strong><span>de resultado, com os cuidados certos</span></div>
+        <div class="promise-stat"><strong>Recuperação rápida</strong><span>anestesia local, sem tempo parado</span></div>
       </div>
     </div>
   </section>
@@ -357,28 +360,28 @@
     <div class="container">
       <div class="benefits-header reveal">
         <span class="eyebrow">Pra quem é indicado</span>
-        <h2>O que os Fios Aptos<br/><em>ajudam a resolver</em></h2>
+        <h2>O que <em>muda</em> pra você</h2>
       </div>
       <div class="benefits-grid">
         <div class="benefit-card reveal">
           <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 10-7.78 7.78l1.06 1.06L12 21l7.78-7.55 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
-          <h3>Bochechas e mandíbula</h3>
-          <p>Flacidez que muda o contorno do rosto e pede sustentação.</p>
+          <h3>O contorno do rosto de volta</h3>
+          <p>Bochechas e mandíbula com a sustentação que a flacidez foi tirando aos poucos.</p>
         </div>
         <div class="benefit-card reveal">
           <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6M4.93 19.07l4.24-4.24m5.66-5.66l4.24-4.24"/></svg></div>
-          <h3>Papada e pescoço</h3>
-          <p>Firmeza na região que mais aparece nas fotos e no espelho.</p>
+          <h3>Aquele ângulo que você evita</h3>
+          <p>Papada e pescoço mais firmes, sem pensar duas vezes antes de uma foto de perfil.</p>
         </div>
         <div class="benefit-card reveal">
           <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <h3>Sobrancelha caída</h3>
-          <p>Efeito lifting sutil que reabre o olhar sem exagero.</p>
+          <h3>Um olhar mais aberto</h3>
+          <p>Sobrancelha caída com um lifting sutil — sem mudar quem você é.</p>
         </div>
         <div class="benefit-card reveal">
           <div class="benefit-icn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4-3-8-6-8-11a4 4 0 014-4 4.4 4.4 0 014 2.5A4.4 4.4 0 0116 6a4 4 0 014 4c0 5-4 8-8 11z"/></svg></div>
-          <h3>Quem evita cirurgia</h3>
-          <p>Uma alternativa não cirúrgica pra quem quer resultado sem cortes.</p>
+          <h3>Sem passar por cirurgia</h3>
+          <p>Resultado real, sem cortes, sem anestesia geral, sem semanas de recuperação.</p>
         </div>
       </div>
     </div>
@@ -390,7 +393,7 @@
       <div class="trust-img"><img src="../fotos/hero.webp" alt="Dra. Vanessa Viríssimo Maciel" loading="lazy" decoding="async" /></div>
       <div class="trust-text">
         <strong>Dra. Vanessa Viríssimo Maciel</strong>
-        <p>CRM/SC 23863 · RQE 23318 · Especialista pela SBD · Especialização e Certificação em Fios Aptos · Florianópolis, SC</p>
+        <p>CRM/SC 23863 · RQE 23318 · Especialista pela SBD · Especialização e Certificação em Fios Aptos. Cada indicação nasce de uma avaliação individual — o que funciona pra você, não uma fórmula pronta.</p>
       </div>
     </div>
   </section>
@@ -399,8 +402,8 @@
   <section class="cta-final">
     <div class="container reveal">
       <span class="eyebrow">Dê o primeiro passo</span>
-      <h2>Veja se os Fios Aptos<br/><em>são indicados pra você</em></h2>
-      <p>Responda 2 perguntas rápidas e receba os horários disponíveis direto no WhatsApp.</p>
+      <h2>Descubra se os Fios Aptos<br/><em>são o caminho pra você</em></h2>
+      <p>Responda 2 perguntas rápidas e veja os horários disponíveis no WhatsApp da Dra. Vanessa.</p>
       <button type="button" class="btn btn-lg" onclick="openModal()">Quero saber se sou candidata</button>
       <p class="cta-privacy">Suas respostas são usadas só para organizar seu atendimento.</p>
     </div>
