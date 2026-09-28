@@ -1,0 +1,8 @@
+# Aliases curtos pras duas versões da LP de Fios Aptos, pra usar nas
+# campanhas (ex.: vanessamacieldermato.com.br/v1). Status 200 = proxy/rewrite:
+# a URL na barra do navegador continua /v1 ou /v2, mas o conteúdo servido é
+# o de /fios-aptos/ ou /fios-aptos-autoridade/ - nenhum arquivo é duplicado.
+/v1       /fios-aptos/              200
+/v1/*     /fios-aptos/:splat        200
+/v2       /fios-aptos-autoridade/   200
+/v2/*     /fios-aptos-autoridade/:splat 200
